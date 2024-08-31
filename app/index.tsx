@@ -1,11 +1,19 @@
-import { ImageBackground, StatusBar, View } from "react-native";
+import { ImageBackground, StatusBar, StyleSheet, View } from "react-native";
 import { Link } from "expo-router";
 import getNonogramHref from "@/utils/getNonogramHref";
 import Text from "@/components/Text";
 import ScrollingBackgroundImage from "@/components/ScrollingBackgroundImage";
 import { windowSize } from "@/constants/windowSize";
+import { useSaveData } from "./lib/save-data";
+import hasCompletedIntroStep from "@/utils/hasCompletedIntroStep";
+import NightOverlay from "@/components/intro/NightOverlay";
+import GrandpaDialogue from "@/components/GrandpaDialogue";
 
 export default function HomeScreen() {
+  const [saveData, setSaveData] = useSaveData();
+
+  const hasCompletedSun = hasCompletedIntroStep("sun", saveData);
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle={"dark-content"} />
@@ -21,11 +29,16 @@ export default function HomeScreen() {
             speed={0.3}
             height={windowSize.height * 0.1}
           />
-          <Link href={getNonogramHref("intro.house")}>
-            <Text>Intro House</Text>
-          </Link>
         </View>
       </ImageBackground>
+      {!hasCompletedSun && (
+        <>
+          <NightOverlay />
+          <GrandpaDialogue
+            text={`Hello dear!\n\nI'm so glad you are here! Truly very fortunate cause I am in trouble. Big trouble! To hear more about all my troubles, please tell me a bit about yourself and how you are doing. Do you like doing this whole farming thing?`}
+          />
+        </>
+      )}
     </View>
   );
 }
