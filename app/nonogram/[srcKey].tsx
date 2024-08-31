@@ -1,4 +1,4 @@
-import { BackHandler, StyleSheet, View } from "react-native";
+import { BackHandler, View } from "react-native";
 import Nonogram from "@/components/nonogram/Nonogram";
 import { NonogramKey, NonogramSources } from "@/constants/nonograms.generated";
 import { router, useLocalSearchParams } from "expo-router";
@@ -71,7 +71,7 @@ export default function NonogramScreen() {
             <AnimatedLottieView
               source={require("../../assets/animations/confetti.json")}
               autoPlay
-              loop={true}
+              loop={false}
               style={{
                 width: windowSize.width,
                 height: windowSize.width,

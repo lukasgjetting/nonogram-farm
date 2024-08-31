@@ -129,20 +129,6 @@ export default function Nonogram({
     return isCorrect;
   };
 
-  console.log(
-    "iscomewra",
-    tileMap.every((row, rIndex) =>
-      row.every((tile, cIndex) => {
-        if (tile === false || (revealedTiles[rIndex]?.[cIndex] ?? false)) {
-        } else {
-          console.log("incomplete!", { rIndex, cIndex });
-        }
-
-        return tile === false || (revealedTiles[rIndex]?.[cIndex] ?? false);
-      }),
-    ),
-  );
-
   const verticalHeader = tileMap.map((row) => getRowHeaderDigits(row));
   const horizontalHeader = new Array(
     Math.max(...tileMap.map((row) => row.length)),
