@@ -35,7 +35,7 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen
-          name="nonogram/[srcKey]"
+          name="nonogram/[nonogramKey]"
           options={{ headerShown: false, gestureEnabled: false }}
         />
       </Stack>

@@ -7,12 +7,17 @@ import Health from "@/components/nonogram/Health";
 import AnimatedLottieView from "lottie-react-native";
 import { windowSize } from "@/constants/windowSize";
 import ScrollingBackgroundImage from "@/components/ScrollingBackgroundImage";
+import GameModal from "@/components/GameModal";
+import Text from "@/components/Text";
+import Button from "@/components/Button";
 
 const MAX_HEALTH = 3;
 
 export default function NonogramScreen() {
-  const params = useLocalSearchParams<{ srcKey: string }>();
-  const isValidKey = Object.keys(NonogramSources).includes(params.srcKey);
+  const params = useLocalSearchParams<{ nonogramKey: string }>();
+  const isValidKey = Object.keys(NonogramSources).includes(params.nonogramKey);
+
+  const [seed, setSeed] = useState(Math.random());
 
   const [isCompleted, setIsCompleted] = useState(false);
   const [health, setHealth] = useState(MAX_HEALTH);
@@ -36,7 +41,26 @@ export default function NonogramScreen() {
     return null;
   }
 
-  console.log({ isCompleted });
+  const onGuessWrong = () => {
+    if (health === 0) {
+      return;
+    } else {
+      setHealth((prev) => prev - 1);
+    }
+  };
+
+  const onReset = () => {
+    setHealth(MAX_HEALTH);
+    setSeed(Math.random());
+  };
+
+  const onComplete = () => {
+    setTimeout(() => setIsCompleted(true), 1000);
+
+    setTimeout(() => {
+      router.back();
+    }, 5000);
+  };
 
   return (
     <ImageBackground
@@ -57,13 +81,11 @@ export default function NonogramScreen() {
       <View style={{ height: 8 }} />
       <View>
         <Nonogram
-          srcKey={params.srcKey as NonogramKey}
-          onGuessWrong={() =>
-            setHealth((prev) => (prev === 0 ? MAX_HEALTH : prev - 1))
-          }
-          onComplete={() => {
-            setTimeout(() => setIsCompleted(true), 1000);
-          }}
+          key={seed}
+          srcKey={params.nonogramKey as NonogramKey}
+          onGuessWrong={onGuessWrong}
+          onComplete={onComplete}
+          isCompleted={isCompleted}
         />
         {isCompleted && (
           <View
@@ -89,6 +111,22 @@ export default function NonogramScreen() {
           </View>
         )}
       </View>
+      <GameModal visible={health === 0} onClose={() => setHealth(MAX_HEALTH)}>
+        <Text style={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}>
+          Game over
+        </Text>
+        <View style={{ height: 16 }} />
+        <Text style={{ textAlign: "center", fontSize: 16 }}>
+          Want to try again?
+        </Text>
+        <View style={{ height: 24 }} />
+        <Button type="primary" onPress={onReset}>
+          Try again
+        </Button>
+        <Button type="link" onPress={() => router.back()}>
+          Go back
+        </Button>
+      </GameModal>
     </ImageBackground>
   );
 }

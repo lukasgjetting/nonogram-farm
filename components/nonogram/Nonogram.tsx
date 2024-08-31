@@ -1,12 +1,16 @@
-import { NonogramKey, NonogramSources } from "@/constants/nonograms.generated";
+import {
+  getNonogramTileMap,
+  NonogramKey,
+} from "@/constants/nonograms.generated";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import Tile from "./Tile";
 import getRowHeaderDigits from "./utils/getRowHeaderDigits";
 import useNonogramPanResponder from "./utils/useNonogramPanResponder";
 import { windowSize } from "@/constants/windowSize";
 import Axis from "./Axis";
+import ColoredMotive from "./ColoredMotive";
 
 export const DEFAULT_NONOGRAM_MARGIN = 16;
 export const FULLSCREEN_NONOGRAM_SIZE =
@@ -18,27 +22,22 @@ const HEADER_DIGIT_SIZE = 20;
 
 export type TileMap = boolean[][];
 
-const getTileMapFromSrcKey = (srcKey: NonogramKey) => {
-  const rawTileMap = NonogramSources[srcKey];
-  return rawTileMap
-    .split("\n")
-    .map((line) => line.split("").map((tile) => tile === "x"));
-};
-
 export type NonogramProps = {
   srcKey: NonogramKey;
   onGuessWrong: () => void;
   onComplete: () => void;
+  isCompleted: boolean;
 };
 
 export default function Nonogram({
   srcKey,
   onGuessWrong,
   onComplete,
+  isCompleted,
 }: NonogramProps) {
   const [revealedTiles, setRevealedTiles] = useState<TileMap>([]);
   const [tileMap, setTileMap] = useState<TileMap>(() =>
-    getTileMapFromSrcKey(srcKey),
+    getNonogramTileMap(srcKey),
   );
 
   const rowsCompleted = tileMap.map((row, rowIndex) =>
@@ -61,7 +60,7 @@ export default function Nonogram({
     );
 
   useEffect(() => {
-    setTileMap(getTileMapFromSrcKey(srcKey));
+    setTileMap(getNonogramTileMap(srcKey));
     setRevealedTiles([]);
   }, [srcKey]);
 
@@ -229,6 +228,15 @@ export default function Nonogram({
                 </View>
               ))}
             </View>
+            {isCompleted && (
+              <View style={StyleSheet.absoluteFill}>
+                <ColoredMotive
+                  nonogramKey={srcKey}
+                  tileSize={tileSize}
+                  tileGap={TILE_GAP}
+                />
+              </View>
+            )}
           </View>
         </View>
       </View>

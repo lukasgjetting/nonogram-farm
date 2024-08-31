@@ -13,6 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "com.lukasgjetting.nonogramfarm",
       "supportsTablet": true
     },
     "android": {
@@ -28,7 +29,13 @@
     },
     "plugins": [
       "expo-router",
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-font",
+        {
+          "fonts": ["node_modules/@expo-google-fonts/grandstander/Grandstander_400Regular.ttf"]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
