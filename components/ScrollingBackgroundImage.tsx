@@ -1,4 +1,3 @@
-import { windowSize } from "@/constants/windowSize";
 import { useEffect, useRef } from "react";
 import {
   Animated,
@@ -14,6 +13,7 @@ type ScrollingBackgroundImageProps = {
   speed: number;
   aspectRatio: number;
   style?: ImageProps["style"];
+  height: number;
 };
 
 export default function ScrollingBackgroundImage({
@@ -21,6 +21,7 @@ export default function ScrollingBackgroundImage({
   speed = 1,
   style,
   aspectRatio,
+  height,
 }: ScrollingBackgroundImageProps) {
   const animatedValue = useRef(new Animated.Value(0)).current;
 
@@ -36,7 +37,7 @@ export default function ScrollingBackgroundImage({
     ).start();
   }, [animatedValue, speed, aspectRatio]);
 
-  const imageHeight = windowSize.height;
+  const imageHeight = height;
   const imageWidth = imageHeight * aspectRatio;
 
   const imageElement = (

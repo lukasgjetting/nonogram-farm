@@ -75,6 +75,7 @@ export default function NonogramScreen() {
       <ScrollingBackgroundImage
         source={require("@/assets/images/clouds.png")}
         aspectRatio={1.46}
+        height={windowSize.height}
         speed={0.15}
       />
       <Health maxHealth={MAX_HEALTH} currentHealth={health} />
