@@ -41,11 +41,14 @@ export default function Nonogram({ srcKey, onGuessWrong }: NonogramProps) {
   }, [srcKey]);
 
   const revealTile = (rowIndex: number, columnIndex: number) => {
-    if (revealedTiles[rowIndex]?.[columnIndex]) {
-      return tileMap[rowIndex]![columnIndex]!;
-    }
+    let isAlreadyRevealed = false;
 
     setRevealedTiles((prev) => {
+      if (prev[rowIndex]?.[columnIndex]) {
+        isAlreadyRevealed = true;
+        return prev;
+      }
+
       const newRevealedTiles = [...prev];
 
       if (newRevealedTiles[rowIndex] == null) {
@@ -60,6 +63,10 @@ export default function Nonogram({ srcKey, onGuessWrong }: NonogramProps) {
     });
 
     const isCorrect = tileMap[rowIndex]?.[columnIndex] ?? false;
+
+    if (isAlreadyRevealed) {
+      return isCorrect;
+    }
 
     if (!isCorrect) {
       onGuessWrong();
