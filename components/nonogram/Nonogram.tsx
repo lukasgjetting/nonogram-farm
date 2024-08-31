@@ -1,16 +1,17 @@
 import { NonogramKey, NonogramSources } from "@/constants/nonograms.generated";
 import { useEffect, useState } from "react";
-import { Dimensions, View } from "react-native";
+import { View } from "react-native";
 import * as Haptics from "expo-haptics";
 import Tile from "./Tile";
 import HorizontalAxis from "./HorizontalAxis";
 import VerticalAxis from "./VerticalAxis";
 import getRowHeaderDigits from "./utils/getRowHeaderDigits";
 import useNonogramPanResponder from "./utils/useNonogramPanResponder";
+import { windowSize } from "@/constants/windowSize";
 
 export const DEFAULT_NONOGRAM_MARGIN = 16;
 export const FULLSCREEN_NONOGRAM_SIZE =
-  Dimensions.get("window").width - DEFAULT_NONOGRAM_MARGIN * 2;
+  windowSize.width - DEFAULT_NONOGRAM_MARGIN * 2;
 
 export const TILE_GAP = 2;
 export const HEADER_DIGIT_SIZE = 25;
@@ -27,9 +28,14 @@ const getTileMapFromSrcKey = (srcKey: NonogramKey) => {
 export type NonogramProps = {
   srcKey: NonogramKey;
   onGuessWrong: () => void;
+  onComplete: () => void;
 };
 
-export default function Nonogram({ srcKey, onGuessWrong }: NonogramProps) {
+export default function Nonogram({
+  srcKey,
+  onGuessWrong,
+  onComplete,
+}: NonogramProps) {
   const [revealedTiles, setRevealedTiles] = useState<TileMap>([]);
   const [tileMap, setTileMap] = useState<TileMap>(() =>
     getTileMapFromSrcKey(srcKey),
@@ -106,9 +112,36 @@ export default function Nonogram({ srcKey, onGuessWrong }: NonogramProps) {
         ? Haptics.ImpactFeedbackStyle.Light
         : Haptics.ImpactFeedbackStyle.Heavy,
     );
+    // If every correct tile is revealed, the game is complete
+    if (
+      tileMap.every((row, rIndex) =>
+        row.every(
+          (tile, cIndex) =>
+            (rIndex === rowIndex && cIndex === columnIndex) ||
+            tile === false ||
+            (revealedTiles[rIndex]?.[cIndex] ?? false),
+        ),
+      )
+    ) {
+      onComplete();
+    }
 
     return isCorrect;
   };
+
+  console.log(
+    "iscomewra",
+    tileMap.every((row, rIndex) =>
+      row.every((tile, cIndex) => {
+        if (tile === false || (revealedTiles[rIndex]?.[cIndex] ?? false)) {
+        } else {
+          console.log("incomplete!", { rIndex, cIndex });
+        }
+
+        return tile === false || (revealedTiles[rIndex]?.[cIndex] ?? false);
+      }),
+    ),
+  );
 
   const verticalHeader = tileMap.map((row) => getRowHeaderDigits(row));
   const horizontalHeader = new Array(
