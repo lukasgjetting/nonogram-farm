@@ -1,4 +1,4 @@
-import { Image, Pressable, View } from "react-native";
+import { Image, View } from "react-native";
 
 export type TileProps = {
   size: number;

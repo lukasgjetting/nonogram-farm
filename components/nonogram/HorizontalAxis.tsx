@@ -1,6 +1,4 @@
 import { View, Text } from "react-native";
-import getRowHeaderDigits from "./utils/getRowHeaderDigits";
-import { TileMap } from "./Nonogram";
 
 export type HorizontalAxisProps = {
   digits: number[][];

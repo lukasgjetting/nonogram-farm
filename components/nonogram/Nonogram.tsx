@@ -16,10 +16,6 @@ export const HEADER_DIGIT_SIZE = 25;
 
 export type TileMap = boolean[][];
 
-export type NonogramProps = {
-  srcKey: NonogramKey;
-};
-
 const getTileMapFromSrcKey = (srcKey: NonogramKey) => {
   const rawTileMap = NonogramSources[srcKey];
   return rawTileMap
@@ -27,7 +23,12 @@ const getTileMapFromSrcKey = (srcKey: NonogramKey) => {
     .map((line) => line.split("").map((tile) => tile === "x"));
 };
 
-export default function Nonogram({ srcKey }: NonogramProps) {
+export type NonogramProps = {
+  srcKey: NonogramKey;
+  onGuessWrong: () => void;
+};
+
+export default function Nonogram({ srcKey, onGuessWrong }: NonogramProps) {
   const [revealedTiles, setRevealedTiles] = useState<TileMap>([]);
   const [tileMap, setTileMap] = useState<TileMap>(() =>
     getTileMapFromSrcKey(srcKey),
@@ -53,7 +54,13 @@ export default function Nonogram({ srcKey }: NonogramProps) {
       return newRevealedTiles;
     });
 
-    return tileMap?.[rowIndex]?.[columnIndex] ?? false;
+    const isCorrect = tileMap?.[rowIndex]?.[columnIndex] ?? false;
+
+    if (!isCorrect) {
+      onGuessWrong();
+    }
+
+    return isCorrect;
   };
 
   const verticalHeader = tileMap.map((row) => getRowHeaderDigits(row));

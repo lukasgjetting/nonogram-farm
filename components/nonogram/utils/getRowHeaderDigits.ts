@@ -2,7 +2,7 @@ const getRowHeaderDigits = (row: boolean[]) => {
   const allDigits = row.reduce(
     (digits, value) => {
       if (value) {
-        digits[digits.length - 1] += 1;
+        digits[digits.length - 1]! += 1;
       } else {
         digits.push(0);
       }
