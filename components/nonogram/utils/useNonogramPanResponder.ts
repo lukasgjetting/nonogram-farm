@@ -12,6 +12,9 @@ const useNonogramPanResponder = (opts: {
     columnIndex: number;
   } | null>(null);
 
+  const onRevealRef = useRef(opts.onRevealTile);
+  onRevealRef.current = opts.onRevealTile;
+
   const handleTouch = (x: number, y: number) => {
     if (isPanCancelledRef.current) {
       return;
@@ -25,7 +28,7 @@ const useNonogramPanResponder = (opts: {
       latestRevealedTileRef.current?.rowIndex !== rowIndex
     ) {
       latestRevealedTileRef.current = { rowIndex, columnIndex };
-      const isCorrect = opts.onRevealTile(rowIndex, columnIndex);
+      const isCorrect = onRevealRef.current(rowIndex, columnIndex);
 
       // If player made a mistake, cancel the pan responder
       if (!isCorrect) {

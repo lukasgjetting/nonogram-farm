@@ -35,12 +35,41 @@ export default function Nonogram({ srcKey, onGuessWrong }: NonogramProps) {
     getTileMapFromSrcKey(srcKey),
   );
 
+  const rowsCompleted = tileMap.map((row, rowIndex) =>
+    row.every(
+      (_col, colIndex) =>
+        tileMap[rowIndex]![colIndex] === false ||
+        (revealedTiles[rowIndex]?.[colIndex] ?? false),
+    ),
+  );
+  const columnsCompleted = new Array(
+    Math.max(...tileMap.map((row) => row.length)),
+  )
+    .fill(null)
+    .map((_, colIndex) =>
+      tileMap.every(
+        (_row, rowIndex) =>
+          tileMap[rowIndex]![colIndex] === false ||
+          (revealedTiles[rowIndex]?.[colIndex] ?? false),
+      ),
+    );
+
   useEffect(() => {
     setTileMap(getTileMapFromSrcKey(srcKey));
     setRevealedTiles([]);
   }, [srcKey]);
 
   const revealTile = (rowIndex: number, columnIndex: number) => {
+    // If out of bounds, do nothing
+    if (tileMap[rowIndex]?.[columnIndex] == null) {
+      return true;
+    }
+
+    // If row or column is completed, do nothing
+    if (rowsCompleted[rowIndex] || columnsCompleted[columnIndex]) {
+      return true;
+    }
+
     let isAlreadyRevealed = false;
 
     setRevealedTiles((prev) => {
@@ -157,8 +186,14 @@ export default function Nonogram({ srcKey, onGuessWrong }: NonogramProps) {
                       revealedTiles[rowIndex]?.[columnIndex] ?? false;
                     return (
                       <Tile
-                        size={tileSize}
                         key={columnIndex}
+                        size={tileSize}
+                        rowIndex={rowIndex}
+                        columnIndex={columnIndex}
+                        isRowCompleted={rowsCompleted[rowIndex] ?? false}
+                        isColumnCompleted={
+                          columnsCompleted[columnIndex] ?? false
+                        }
                         state={
                           isRevealed
                             ? tileValue
