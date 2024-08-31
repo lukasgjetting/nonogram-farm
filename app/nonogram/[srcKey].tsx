@@ -1,4 +1,4 @@
-import { BackHandler, View } from "react-native";
+import { BackHandler, ImageBackground, View } from "react-native";
 import Nonogram from "@/components/nonogram/Nonogram";
 import { NonogramKey, NonogramSources } from "@/constants/nonograms.generated";
 import { router, useLocalSearchParams } from "expo-router";
@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Health from "@/components/nonogram/Health";
 import AnimatedLottieView from "lottie-react-native";
 import { windowSize } from "@/constants/windowSize";
+import ScrollingBackgroundImage from "@/components/ScrollingBackgroundImage";
 
 const MAX_HEALTH = 3;
 
@@ -35,8 +36,11 @@ export default function NonogramScreen() {
     return null;
   }
 
+  console.log({ isCompleted });
+
   return (
-    <View
+    <ImageBackground
+      source={require("@/assets/images/sky.png")}
       style={{
         flex: 1,
         justifyContent: "center",
@@ -44,6 +48,11 @@ export default function NonogramScreen() {
         alignItems: "center",
       }}
     >
+      <ScrollingBackgroundImage
+        source={require("@/assets/images/clouds.png")}
+        aspectRatio={1.46}
+        speed={0.15}
+      />
       <Health maxHealth={MAX_HEALTH} currentHealth={health} />
       <View style={{ height: 8 }} />
       <View>
@@ -80,6 +89,6 @@ export default function NonogramScreen() {
           </View>
         )}
       </View>
-    </View>
+    </ImageBackground>
   );
 }

@@ -63,7 +63,25 @@ export default function Health({ currentHealth, maxHealth }: HealthProps) {
   }, [heartAnimatedValuesRefs, maxHealth, currentHealth]);
 
   return (
-    <View style={{ flexDirection: "row", gap: 8 }}>
+    <View
+      style={{
+        flexDirection: "row",
+        gap: 8,
+        backgroundColor: "white",
+        borderRadius: 100,
+        paddingHorizontal: 16,
+        paddingVertical: 4,
+        shadowColor: "#999",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 1,
+      }}
+    >
       {new Array(maxHealth).fill(null).map((_, index) => (
         <View key={index}>
           <Image

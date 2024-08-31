@@ -3,18 +3,18 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import * as Haptics from "expo-haptics";
 import Tile from "./Tile";
-import HorizontalAxis from "./HorizontalAxis";
-import VerticalAxis from "./VerticalAxis";
 import getRowHeaderDigits from "./utils/getRowHeaderDigits";
 import useNonogramPanResponder from "./utils/useNonogramPanResponder";
 import { windowSize } from "@/constants/windowSize";
+import Axis from "./Axis";
 
 export const DEFAULT_NONOGRAM_MARGIN = 16;
 export const FULLSCREEN_NONOGRAM_SIZE =
   windowSize.width - DEFAULT_NONOGRAM_MARGIN * 2;
 
-export const TILE_GAP = 2;
-export const HEADER_DIGIT_SIZE = 25;
+const TILE_GAP = 2;
+
+const HEADER_DIGIT_SIZE = 20;
 
 export type TileMap = boolean[][];
 
@@ -112,6 +112,7 @@ export default function Nonogram({
         ? Haptics.ImpactFeedbackStyle.Light
         : Haptics.ImpactFeedbackStyle.Heavy,
     );
+
     // If every correct tile is revealed, the game is complete
     if (
       tileMap.every((row, rIndex) =>
@@ -169,17 +170,19 @@ export default function Nonogram({
           alignItems: "flex-end",
         }}
       >
-        <VerticalAxis
+        <Axis
+          direction="vertical"
           digitSize={HEADER_DIGIT_SIZE}
           tileGap={TILE_GAP}
-          digits={verticalHeader}
+          allDigits={verticalHeader}
           tileSize={tileSize}
         />
         <View>
-          <HorizontalAxis
+          <Axis
+            direction="horizontal"
             digitSize={HEADER_DIGIT_SIZE}
             tileGap={TILE_GAP}
-            digits={horizontalHeader}
+            allDigits={horizontalHeader}
             tileSize={tileSize}
           />
           <View
