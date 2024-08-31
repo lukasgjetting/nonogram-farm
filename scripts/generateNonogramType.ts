@@ -8,18 +8,17 @@ const outputFile = path.join(__dirname, "../constants/nonograms.generated.ts");
 const files = glob.sync(path.join(nonogramFolder, "**/*.txt"));
 
 const keyValuePairs = files.map((rawFile: string) => {
-  const fileWithFolder = rawFile.replace(nonogramFolder, "");
-  const key = fileWithFolder
-    .replace(".txt", "")
-    .replace("/", "")
-    .replaceAll("/", ".");
+  // Remove folder and first /
+  const fileWithFolder = rawFile.replace(nonogramFolder, "").replace("/", "");
+  const key = fileWithFolder.replace(".txt", "").replaceAll("/", ".");
+  const content = fs.readFileSync(rawFile, "utf8");
 
-  return `'${key}': '${fileWithFolder}'`;
+  return `"${key}": "${content.replaceAll("\n", "\\n")}"`;
 });
 
 const output = `export const NonogramSources = {
   ${keyValuePairs.join(",\n  ")}
-}
+} as const;
 
 export type NonogramKey = keyof typeof NonogramSources;`;
 
