@@ -16,7 +16,7 @@ export default function HorizontalAxis({
   digitSize,
 }: HorizontalAxisProps) {
   return (
-    <View style={{ flexDirection: "row", gap: tileGap }}>
+    <View style={{ flexDirection: "row", gap: tileGap, paddingLeft: tileGap }}>
       {horizontalHeader.map((digits, index) => (
         <View
           key={index}

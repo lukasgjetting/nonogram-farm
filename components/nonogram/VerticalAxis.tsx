@@ -16,7 +16,7 @@ export default function VerticalAxis({
   digitSize,
 }: VerticalAxisProps) {
   return (
-    <View style={{ gap: tileGap }}>
+    <View style={{ gap: tileGap, top: -tileGap }}>
       {verticalHeader.map((digits, index) => (
         <View
           key={index}
