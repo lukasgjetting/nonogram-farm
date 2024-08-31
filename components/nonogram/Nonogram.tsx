@@ -5,6 +5,7 @@ import Tile from "./Tile";
 import HorizontalAxis from "./HorizontalAxis";
 import VerticalAxis from "./VerticalAxis";
 import getRowHeaderDigits from "./utils/getRowHeaderDigits";
+import useNonogramPanResponder from "./utils/useNonogramPanResponder";
 
 export const DEFAULT_NONOGRAM_MARGIN = 16;
 export const FULLSCREEN_NONOGRAM_SIZE =
@@ -34,6 +35,7 @@ export default function Nonogram({ srcKey }: NonogramProps) {
 
   useEffect(() => {
     setTileMap(getTileMapFromSrcKey(srcKey));
+    setRevealedTiles([]);
   }, [srcKey]);
 
   const revealTile = (rowIndex: number, columnIndex: number) => {
@@ -50,6 +52,8 @@ export default function Nonogram({ srcKey }: NonogramProps) {
 
       return newRevealedTiles;
     });
+
+    return tileMap?.[rowIndex]?.[columnIndex] ?? false;
   };
 
   const verticalHeader = tileMap.map((row) => getRowHeaderDigits(row));
@@ -73,6 +77,12 @@ export default function Nonogram({ srcKey }: NonogramProps) {
       verticalHeaderWidth -
       (tilesInRow + 1) * TILE_GAP) /
     tilesInRow;
+
+  const panResponder = useNonogramPanResponder({
+    tileSize,
+    tileGap: TILE_GAP,
+    onRevealTile: revealTile,
+  });
 
   return (
     <View
@@ -101,36 +111,42 @@ export default function Nonogram({ srcKey }: NonogramProps) {
           />
           <View
             style={{
-              gap: TILE_GAP,
               padding: TILE_GAP,
               backgroundColor: "#f0f0f0",
             }}
+            {...panResponder.panHandlers}
           >
-            {tileMap?.map((row, rowIndex) => (
-              <View
-                key={rowIndex}
-                style={{ flexDirection: "row", gap: TILE_GAP }}
-              >
-                {row.map((tileValue, columnIndex) => {
-                  const isRevealed =
-                    revealedTiles[rowIndex]?.[columnIndex] ?? false;
-                  return (
-                    <Tile
-                      size={tileSize}
-                      key={columnIndex}
-                      state={
-                        isRevealed
-                          ? tileValue
-                            ? "filled"
-                            : "crossed"
-                          : "empty"
-                      }
-                      onPress={() => revealTile(rowIndex, columnIndex)}
-                    />
-                  );
-                })}
-              </View>
-            ))}
+            <View
+              style={{
+                gap: TILE_GAP,
+              }}
+              pointerEvents="none"
+            >
+              {tileMap?.map((row, rowIndex) => (
+                <View
+                  key={rowIndex}
+                  style={{ flexDirection: "row", gap: TILE_GAP }}
+                >
+                  {row.map((tileValue, columnIndex) => {
+                    const isRevealed =
+                      revealedTiles[rowIndex]?.[columnIndex] ?? false;
+                    return (
+                      <Tile
+                        size={tileSize}
+                        key={columnIndex}
+                        state={
+                          isRevealed
+                            ? tileValue
+                              ? "filled"
+                              : "crossed"
+                            : "empty"
+                        }
+                      />
+                    );
+                  })}
+                </View>
+              ))}
+            </View>
           </View>
         </View>
       </View>

@@ -11,7 +11,8 @@
     "test": "jest --watchAll",
     "lint": "expo lint",
     "lint:fix": "eslint . --fix",
-    "generate-nonogram-types": "nodemon --watch assets/nonograms -e txt --exec \"ts-node ./scripts/generateNonogramType.ts\""
+    "nonogram-codegen": "ts-node ./scripts/generateNonogramType.ts",
+    "nonogram-codegen:watch": "nodemon --watch assets/nonograms -e txt --exec \"ts-node ./scripts/generateNonogramType.ts\""
   },
   "jest": {
     "preset": "jest-expo"

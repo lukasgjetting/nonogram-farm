@@ -1,18 +1,17 @@
-import { Image, Pressable } from "react-native";
+import { Image, Pressable, View } from "react-native";
 
 export type TileProps = {
   size: number;
   state: "empty" | "filled" | "crossed";
-  onPress: () => void;
 };
 
 const FILLED_COLOR = "black";
 const EMPTY_COLOR = "white";
 const CROSS_COLOR = "red";
 
-export default function Tile({ size, state, onPress }: TileProps) {
+export default function Tile({ size, state }: TileProps) {
   return (
-    <Pressable
+    <View
       style={{
         width: size,
         height: size,
@@ -20,7 +19,9 @@ export default function Tile({ size, state, onPress }: TileProps) {
         justifyContent: "center",
         alignItems: "center",
       }}
-      onPress={onPress}
+      onPointerEnter={() => {
+        console.log("pointer enter");
+      }}
     >
       {state === "crossed" && (
         <Image
@@ -32,6 +33,6 @@ export default function Tile({ size, state, onPress }: TileProps) {
           }}
         />
       )}
-    </Pressable>
+    </View>
   );
 }
