@@ -1,6 +1,7 @@
 import { NonogramKey, NonogramSources } from "@/constants/nonograms.generated";
 import { useEffect, useState } from "react";
 import { Dimensions, View } from "react-native";
+import * as Haptics from "expo-haptics";
 import Tile from "./Tile";
 import HorizontalAxis from "./HorizontalAxis";
 import VerticalAxis from "./VerticalAxis";
@@ -40,6 +41,10 @@ export default function Nonogram({ srcKey, onGuessWrong }: NonogramProps) {
   }, [srcKey]);
 
   const revealTile = (rowIndex: number, columnIndex: number) => {
+    if (revealedTiles[rowIndex]?.[columnIndex]) {
+      return tileMap[rowIndex]![columnIndex]!;
+    }
+
     setRevealedTiles((prev) => {
       const newRevealedTiles = [...prev];
 
@@ -54,11 +59,17 @@ export default function Nonogram({ srcKey, onGuessWrong }: NonogramProps) {
       return newRevealedTiles;
     });
 
-    const isCorrect = tileMap?.[rowIndex]?.[columnIndex] ?? false;
+    const isCorrect = tileMap[rowIndex]?.[columnIndex] ?? false;
 
     if (!isCorrect) {
       onGuessWrong();
     }
+
+    Haptics.impactAsync(
+      isCorrect
+        ? Haptics.ImpactFeedbackStyle.Light
+        : Haptics.ImpactFeedbackStyle.Heavy,
+    );
 
     return isCorrect;
   };
