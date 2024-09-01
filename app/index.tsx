@@ -84,8 +84,8 @@ export default function HomeScreen() {
           y={620}
           dropDelay={2250}
         />
+        {introChapter ?? <BottomMenu />}
       </ImageBackground>
-      {introChapter ?? <BottomMenu />}
     </View>
   );
 }
