@@ -2,14 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const SAVE_DATA_ASYNC_STORAGE_KEY = "nonogramFarm:saveData";
 
-export const INTRO_STEPS = [
-  "sun",
-  "house",
-  "tree",
-  "flower",
-  "lake",
-  "farm",
-] as const;
+export const INTRO_STEPS = ["sun", "house", "plants", "farm"] as const;
 
 export type IntroStep = (typeof INTRO_STEPS)[number];
 

@@ -15,6 +15,7 @@ import Text from "@/src/components/Text";
 import Button from "@/src/components/Button";
 import { useSaveData } from "@/src/lib/save-data";
 import GrandpaDialogue from "@/src/components/GrandpaDialogue";
+import { onNonogramComplete } from "@/src/lib/nonogram-completion";
 
 const MAX_HEALTH = 3;
 
@@ -67,6 +68,7 @@ export default function NonogramScreen() {
 
     setTimeout(() => {
       router.back();
+      onNonogramComplete(params.nonogramKey as NonogramKey);
     }, 5000);
   };
 

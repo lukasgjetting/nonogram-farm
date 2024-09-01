@@ -34,7 +34,7 @@ const TEXT_STYLE: TextStyle = {
 
 type Props = {
   text: string;
-  onComplete: () => void;
+  onComplete?: () => void;
   delay?: number;
 };
 
@@ -62,7 +62,7 @@ export default function GrandpaDialogue({
     }).start(() => {
       if (isFinished) {
         setDidCompleteFinishAnimation(true);
-        onComplete();
+        onComplete?.();
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

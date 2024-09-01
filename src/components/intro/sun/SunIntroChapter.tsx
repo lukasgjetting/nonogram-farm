@@ -1,11 +1,13 @@
 import GrandpaDialogue from "@/src/components/GrandpaDialogue";
-import NightOverlay from "../NightOverlay";
+import NightOverlay from "./NightOverlay";
 import useProgressionState from "@/src/utils/useProgressionState";
 import { Animated, StyleSheet, View } from "react-native";
 import NonogramIcon from "@/src/components/NonogramIcon";
 import { windowSize } from "@/src/constants/windowSize";
 import useMultiStepTiming from "@/src/utils/useMultiStepTiming";
 import navigateToNonogramScreen from "@/src/utils/navigateToNonogramScreen";
+import { useNonogramCompletionListener } from "@/src/lib/nonogram-completion";
+import { useState } from "react";
 
 const TOTAL_NONOGRAM_ANIMATION_DURATION = 3000;
 
@@ -34,9 +36,21 @@ export default function SunIntroChapter({ onComplete }: SunIntroChapterProps) {
     onComplete: () => setTimeout(onProgress, 1000),
   });
 
+  const [isNonogramComplete, setIsNonogramComplete] = useState(false);
+
+  useNonogramCompletionListener("intro.sun", () => {
+    setTimeout(() => {
+      setIsNonogramComplete(true);
+    }, 2000);
+
+    setTimeout(() => {
+      onComplete();
+    }, 2000);
+  });
+
   return (
     <>
-      <NightOverlay />
+      <NightOverlay isVisible={!isNonogramComplete} />
       <GrandpaDialogue
         onComplete={onProgress}
         delay={1000}
