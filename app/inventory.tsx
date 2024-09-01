@@ -72,7 +72,7 @@ export default function InventoryScreen() {
         ]
       : []),
     ...Object.entries(saveData.seeds)
-      .filter(([_seed, count]) => count > 0)
+      .filter(([seed, count]) => count > 0 && seed !== "undefined")
       .map(([seed, count]) => ({
         id: seed,
         image: SEED_BAG_IMAGES[seed as SeedType],
@@ -103,7 +103,7 @@ export default function InventoryScreen() {
                 const seedType = item.id as SeedType;
                 Alert.alert(
                   `${SEED_LABELS[seedType]} seed`,
-                  `Takes ${formatTimeLabel(SEED_GROWTH_TIME[seedType])} to grow`,
+                  `Can be planted in your farm.\n\nTakes ${formatTimeLabel(SEED_GROWTH_TIME[seedType])} to grow`,
                 );
               }
             }}

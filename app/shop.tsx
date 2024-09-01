@@ -122,9 +122,10 @@ export default function ShopScreen() {
                   />
                 </View>
                 <ValueChangeIndicator
+                  duration={500}
                   change={boughtId === item.id ? 1 : 0}
                   onComplete={() => setBoughtId(undefined)}
-                  style={{ top: -24 - ITEM_SIZE / 2 }}
+                  style={{ top: -12 - ITEM_SIZE / 2 }}
                 />
               </View>
             )}

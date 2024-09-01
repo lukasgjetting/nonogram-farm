@@ -16,6 +16,7 @@ type ValueChangeIndicatorProps = {
   onComplete: () => void;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  duration?: number;
 };
 
 export default function ValueChangeIndicator({
@@ -23,6 +24,7 @@ export default function ValueChangeIndicator({
   onComplete,
   style,
   textStyle,
+  duration = 1000,
 }: ValueChangeIndicatorProps) {
   const animatedValue = useAnimatedValue(0);
 
@@ -36,7 +38,7 @@ export default function ValueChangeIndicator({
 
     Animated.timing(animatedValue, {
       toValue: 1,
-      duration: 1000,
+      duration,
       useNativeDriver: true,
     }).start(() => {
       onComplete();
