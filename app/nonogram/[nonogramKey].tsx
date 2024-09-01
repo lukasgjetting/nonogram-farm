@@ -14,7 +14,7 @@ import GameModal from "@/src/components/GameModal";
 import Text from "@/src/components/Text";
 import Button from "@/src/components/Button";
 import { useSaveData } from "@/src/lib/save-data";
-import GrandpaDialogue from "@/src/components/GrandpaDialogue";
+import GrandpaDialogue from "@/src/components/interfaces/GrandpaDialogue";
 import { onNonogramComplete } from "@/src/lib/nonogram-completion";
 
 const MAX_HEALTH = 3;

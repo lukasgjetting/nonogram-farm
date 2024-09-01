@@ -1,23 +1,26 @@
-import BottomMenu from "@/src/components/navigation/BottomMenu";
+import NewItemModal from "@/src/components/interfaces/NewItemModal";
+import BottomMenu from "@/src/components/interfaces/BottomMenu";
 import Header from "@/src/components/store/Header";
 import ItemSlots, { Item } from "@/src/components/store/ItemSlots";
 import Text from "@/src/components/Text";
-import ValueChangeIndicator from "@/src/components/ValueChangeIndicator";
 import { NonogramKey } from "@/src/constants/nonograms.generated";
 import { SEED_BAG_IMAGES, SeedType } from "@/src/constants/seeds";
 import { useNonogramCompletionListener } from "@/src/lib/nonogram-completion";
 import { useSaveData } from "@/src/lib/save-data";
 import navigateToNonogramScreen from "@/src/utils/navigateToNonogramScreen";
-import { router } from "expo-router";
 import { useState } from "react";
 import { ImageBackground, StatusBar, View } from "react-native";
 
 const ELIGIBLE_SEED_NONOGRAMS = [
   "intro.house",
   "intro.sun",
+  "intro.simple",
+  "intro.tree",
 ] satisfies NonogramKey[];
 
-const SEED_BY_NONOGRAM_KEY: Record<NonogramKey, SeedType> = {
+type EligibleSeedNonogramKey = (typeof ELIGIBLE_SEED_NONOGRAMS)[number];
+
+const SEED_BY_NONOGRAM_KEY: Record<EligibleSeedNonogramKey, SeedType> = {
   "intro.house": "lettuce",
   "intro.sun": "carrot",
   "intro.simple": "tomato",
@@ -27,7 +30,8 @@ const SEED_BY_NONOGRAM_KEY: Record<NonogramKey, SeedType> = {
 export default function InventoryScreen() {
   const [saveData, updateSaveData] = useSaveData();
 
-  const [currentNonogram, setCurrentNonogram] = useState<NonogramKey>();
+  const [currentNonogram, setCurrentNonogram] =
+    useState<EligibleSeedNonogramKey>();
   const [hasCompletedNonogram, setHasCompletedNonogram] = useState(false);
 
   useNonogramCompletionListener(currentNonogram, () => {
@@ -117,18 +121,23 @@ export default function InventoryScreen() {
                     {item.extra}
                   </Text>
                 </ImageBackground>
-                <ValueChangeIndicator
-                  change={1}
-                  onComplete={() => {
-                    setHasCompletedNonogram(false);
-                    setCurrentNonogram(undefined);
-                  }}
-                />
               </>
             )}
           />
         </View>
         <BottomMenu showBackButton />
+        <NewItemModal
+          visible={hasCompletedNonogram && currentNonogram != null}
+          imageSource={
+            SEED_BAG_IMAGES[SEED_BY_NONOGRAM_KEY[currentNonogram!]!]!
+          }
+          imageHeight={100}
+          imageWidth={100}
+          onClose={() => {
+            setCurrentNonogram(undefined);
+            setHasCompletedNonogram(false);
+          }}
+        />
       </ImageBackground>
     </View>
   );

@@ -10,7 +10,7 @@ import HousePlants from "@/src/components/buildings/HousePlants";
 import FarmPlants from "@/src/components/buildings/FarmPlants";
 import FarmLand from "@/src/components/buildings/FarmLand";
 import FarmFence from "@/src/components/buildings/FarmFence";
-import BottomMenu from "@/src/components/navigation/BottomMenu";
+import BottomMenu from "@/src/components/interfaces/BottomMenu";
 
 export default function HomeScreen() {
   const [saveData, setSaveData] = useSaveData();

@@ -1,5 +1,5 @@
 import { useSaveData } from "@/src/lib/save-data";
-import GrandpaDialogue from "../../GrandpaDialogue";
+import GrandpaDialogue from "../../interfaces/GrandpaDialogue";
 import { useState } from "react";
 import useMultiStepTiming from "@/src/utils/useMultiStepTiming";
 import navigateToNonogramScreen from "@/src/utils/navigateToNonogramScreen";

@@ -1,4 +1,4 @@
-import BottomMenu from "@/src/components/navigation/BottomMenu";
+import BottomMenu from "@/src/components/interfaces/BottomMenu";
 import Header from "@/src/components/store/Header";
 import ItemSlots, { ITEM_SIZE } from "@/src/components/store/ItemSlots";
 import Text from "@/src/components/Text";

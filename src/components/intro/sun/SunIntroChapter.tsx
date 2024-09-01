@@ -1,4 +1,4 @@
-import GrandpaDialogue from "@/src/components/GrandpaDialogue";
+import GrandpaDialogue from "@/src/components/interfaces/GrandpaDialogue";
 import NightOverlay from "./NightOverlay";
 import useProgressionState from "@/src/utils/useProgressionState";
 import { Animated, StyleSheet, View } from "react-native";
