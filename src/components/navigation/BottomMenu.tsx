@@ -4,12 +4,32 @@ import Text from "../Text";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { windowSize } from "@/src/constants/windowSize";
 import { router } from "expo-router";
+import { useEffect, useRef, useState } from "react";
+import ValueChangeIndicator from "../ValueChangeIndicator";
 
 const BUTTON_SIZE = windowSize.width / 4.5;
 
 export default function BottomMenu() {
   const [{ coins, points }] = useSaveData();
   const insets = useSafeAreaInsets();
+
+  const lastCoins = useRef(coins);
+  const lastPoints = useRef(points);
+
+  const [coinsChange, setCoinsChange] = useState(0);
+  const [pointsChange, setPointsChange] = useState(0);
+
+  useEffect(() => {
+    if (coins !== lastCoins.current) {
+      setCoinsChange(coins - lastCoins.current);
+      lastCoins.current = coins;
+    }
+
+    if (points !== lastPoints.current) {
+      setPointsChange(points - lastPoints.current);
+      lastPoints.current = points;
+    }
+  }, [coins, points]);
 
   return (
     <View
@@ -46,6 +66,10 @@ export default function BottomMenu() {
               <Text style={{ textAlign: "right", fontSize: 18, top: 2 }}>
                 {coins ?? 0}
               </Text>
+              <ValueChangeIndicator
+                change={coinsChange}
+                onComplete={() => setCoinsChange(0)}
+              />
             </View>
             <Image
               source={require("@/assets/images/icons/coins.png")}
@@ -67,6 +91,10 @@ export default function BottomMenu() {
               <Text style={{ textAlign: "right", fontSize: 18, top: 2 }}>
                 {points ?? 0}
               </Text>
+              <ValueChangeIndicator
+                change={pointsChange}
+                onComplete={() => setPointsChange(0)}
+              />
             </View>
             <Image
               source={require("@/assets/images/icons/points.png")}

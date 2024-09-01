@@ -49,7 +49,7 @@ export default function HomeScreen() {
       <ImageBackground
         style={{ flex: 1, justifyContent: "center" }}
         imageStyle={{ resizeMode: "cover" }}
-        source={require("@assets/images/farm.png")}
+        source={require("@assets/images/farm-background.png")}
       >
         <View style={{ flex: 1 }}>
           <ScrollingBackgroundImage
