@@ -103,7 +103,7 @@ const renderAllFarmLands = (props: BuildingProps, seed: PlantedSeed | null) => {
 };
 
 export default function FarmLand(props: BuildingProps) {
-  const [{ plantedSeed }, updateSaveData] = useSaveData();
+  const [{ plantedSeed, seeds }, updateSaveData] = useSaveData();
   const harvest = useHarvest();
 
   const pulseAnimatedValue = useAnimatedValue(0);
@@ -190,6 +190,10 @@ export default function FarmLand(props: BuildingProps) {
         onClose={() => setIsSeedMenuOpen(false)}
         onSelect={(seed) => {
           updateSaveData("plantedSeed", { type: seed, plantedAt: Date.now() });
+          updateSaveData("seeds", {
+            ...seeds,
+            [seed]: (seeds[seed] ?? 0) - 1,
+          });
         }}
       />
     </>

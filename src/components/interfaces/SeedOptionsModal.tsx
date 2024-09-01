@@ -12,6 +12,7 @@ import {
   useAnimatedValue,
   View,
 } from "react-native";
+import QuantityIndicator from "../QuantityIndicator";
 
 type SeedOptionsModalProps = {
   visible: boolean;
@@ -115,6 +116,10 @@ export default function SeedOptionsModal({
                 <Image
                   source={SEED_BAG_IMAGES[s]}
                   style={{ width: 60, height: 100, resizeMode: "contain" }}
+                />
+                <QuantityIndicator
+                  quantity={seeds[s] ?? 0}
+                  style={{ position: "absolute", top: 4, right: -4 }}
                 />
               </Animated.View>
             </TouchableOpacity>
