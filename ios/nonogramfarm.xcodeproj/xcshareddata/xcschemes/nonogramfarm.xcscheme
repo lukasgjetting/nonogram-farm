@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "nonogramfarm.app"
-               BlueprintName = "nonogramfarm"
-               ReferencedContainer = "container:nonogramfarm.xcodeproj">
+               BuildableName = "NonogramFarm.app"
+               BlueprintName = "NonogramFarm"
+               ReferencedContainer = "container:NonogramFarm.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "nonogramfarmTests.xctest"
-               BlueprintName = "nonogramfarmTests"
-               ReferencedContainer = "container:nonogramfarm.xcodeproj">
+               BuildableName = "NonogramFarmTests.xctest"
+               BlueprintName = "NonogramFarmTests"
+               ReferencedContainer = "container:NonogramFarm.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "nonogramfarm.app"
-            BlueprintName = "nonogramfarm"
-            ReferencedContainer = "container:nonogramfarm.xcodeproj">
+            BuildableName = "NonogramFarm.app"
+            BlueprintName = "NonogramFarm"
+            ReferencedContainer = "container:NonogramFarm.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "nonogramfarm.app"
-            BlueprintName = "nonogramfarm"
-            ReferencedContainer = "container:nonogramfarm.xcodeproj">
+            BuildableName = "NonogramFarm.app"
+            BlueprintName = "NonogramFarm"
+            ReferencedContainer = "container:NonogramFarm.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

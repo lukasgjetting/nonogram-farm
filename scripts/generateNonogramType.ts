@@ -23,7 +23,9 @@ const nonograms = files.map((rawFile) => {
       return { letter: letter!, color: color! };
     });
 
-  const contentLines = lines.filter((line) => line.match(/^[a-zA-Z]$/) != null);
+  const contentLines = lines.filter(
+    (line) => line.match(/^[a-zA-Z]+$/) != null,
+  );
   const nameLine = lines.find((line) => line.match(/^<.*>$/) != null);
 
   return {

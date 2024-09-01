@@ -1,6 +1,7 @@
 import {
   getNonogramTileMap,
   NonogramKey,
+  NonogramSources,
 } from "@/constants/nonograms.generated";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -11,6 +12,8 @@ import useNonogramPanResponder from "./utils/useNonogramPanResponder";
 import { windowSize } from "@/constants/windowSize";
 import Axis from "./Axis";
 import ColoredMotive from "./ColoredMotive";
+import Text from "../Text";
+import CompletedName from "./CompletedName";
 
 export const DEFAULT_NONOGRAM_MARGIN = 16;
 export const FULLSCREEN_NONOGRAM_SIZE =
@@ -65,6 +68,11 @@ export default function Nonogram({
   }, [srcKey]);
 
   const revealTile = (rowIndex: number, columnIndex: number) => {
+    // If game is completed, do nothing
+    if (isCompleted) {
+      return false;
+    }
+
     // If out of bounds, do nothing
     if (tileMap[rowIndex]?.[columnIndex] == null) {
       return true;
@@ -235,6 +243,16 @@ export default function Nonogram({
                   tileSize={tileSize}
                   tileGap={TILE_GAP}
                 />
+                <View
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    bottom: -32,
+                  }}
+                >
+                  <CompletedName nonogramKey={srcKey} />
+                </View>
               </View>
             )}
           </View>

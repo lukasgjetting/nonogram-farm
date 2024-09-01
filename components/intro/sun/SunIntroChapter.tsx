@@ -35,6 +35,7 @@ export default function SunIntroChapter() {
       <NightOverlay />
       <GrandpaDialogue
         onComplete={onProgress}
+        delay={1000}
         text={`Hi! Welcome to your brand new farm! My name is Otto and I am your new neighbour. I was planning to invite you for a cup of coffee in the sun, but it seems we missed the last sunlight.\n\nIf only there was a way to get it back...`}
       />
       {finishedGrandpaIntro && (

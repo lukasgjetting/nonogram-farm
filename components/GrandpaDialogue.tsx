@@ -10,6 +10,7 @@ import {
 import Text from "./Text";
 import { windowSize } from "@/constants/windowSize";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useRef, useState } from "react";
 import useSplitDialogueText from "@/utils/useSplitDialogueText";
 
@@ -23,7 +24,7 @@ const TEXT_MAX_NUMBER_OF_LINES = 6;
 
 const TEXT_BOX_HEIGHT = TEXT_LINE_HEIGHT * TEXT_MAX_NUMBER_OF_LINES;
 const TEXT_BOX_PADDING = 16;
-const MARGIN_BOTTOM = 48;
+const MARGIN_VERTICAL = 48;
 
 const TEXT_STYLE: TextStyle = {
   fontSize: 20,
@@ -34,9 +35,14 @@ const TEXT_STYLE: TextStyle = {
 type Props = {
   text: string;
   onComplete: () => void;
+  delay?: number;
 };
 
-export default function GrandpaDialogue({ text: rawText, onComplete }: Props) {
+export default function GrandpaDialogue({
+  text: rawText,
+  onComplete,
+  delay = 0,
+}: Props) {
   const insets = useSafeAreaInsets();
 
   const animatedValue = useRef(new Animated.Value(0)).current;
@@ -49,6 +55,7 @@ export default function GrandpaDialogue({ text: rawText, onComplete }: Props) {
 
   useEffect(() => {
     Animated.spring(animatedValue, {
+      delay: isFinished ? 0 : delay,
       toValue: isFinished ? 0 : 1,
       useNativeDriver: true,
       bounciness: isFinished ? 0 : 6,
@@ -90,21 +97,38 @@ export default function GrandpaDialogue({ text: rawText, onComplete }: Props) {
     }
 
     setLastShownIndex(0);
-    const intervalId = setInterval(() => {
-      setLastShownIndex((index) => {
-        if (index >= currentSection.length) {
-          clearInterval(intervalId);
-        }
 
-        return index + 1;
-      });
-    }, CHARACTER_DELAY_MS);
+    let intervalId: NodeJS.Timeout | null = null;
 
-    return () => clearInterval(intervalId);
-  }, [isReady, currentSection.length]);
+    // Delay starting until modal is shown, but only first section
+    setTimeout(
+      () => {
+        intervalId = setInterval(() => {
+          setLastShownIndex((index) => {
+            if (index >= currentSection.length && intervalId != null) {
+              clearInterval(intervalId);
+            }
+
+            return index + 1;
+          });
+        }, CHARACTER_DELAY_MS);
+      },
+      currentSectionIndex === 0 ? delay + 200 : 0,
+    );
+
+    return () => {
+      if (intervalId != null) {
+        clearInterval(intervalId);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isReady, currentSectionIndex, currentSection.length]);
 
   const totalOffset =
-    TEXT_BOX_HEIGHT + 2 * TEXT_BOX_PADDING + MARGIN_BOTTOM + insets.bottom;
+    TEXT_BOX_HEIGHT +
+    2 * TEXT_BOX_PADDING +
+    2 * MARGIN_VERTICAL +
+    insets.bottom;
 
   return (
     <Modal transparent visible={!didCompleteFinishAnimation}>
@@ -112,7 +136,6 @@ export default function GrandpaDialogue({ text: rawText, onComplete }: Props) {
         style={{
           flex: 1,
           justifyContent: "flex-end",
-          marginBottom: insets.bottom,
           transform: [
             {
               translateY: animatedValue.interpolate({
@@ -128,10 +151,17 @@ export default function GrandpaDialogue({ text: rawText, onComplete }: Props) {
             flexDirection: "row",
             alignItems: "flex-end",
             paddingHorizontal: 16,
-            paddingBottom: MARGIN_BOTTOM,
+            paddingTop: MARGIN_VERTICAL,
+            paddingBottom: insets.bottom + MARGIN_VERTICAL,
             gap: 24,
           }}
         >
+          <LinearGradient
+            colors={["#0000", "#0005"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={StyleSheet.absoluteFill}
+          />
           <Image
             source={require("@assets/images/grandpa.png")}
             style={{ width: GRANDPA_WIDTH, height: GRANDPA_HEIGHT }}
@@ -140,6 +170,14 @@ export default function GrandpaDialogue({ text: rawText, onComplete }: Props) {
             style={{
               flex: 1,
               backgroundColor: "white",
+              elevation: 1,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
               borderRadius: 16,
               padding: TEXT_BOX_PADDING,
             }}

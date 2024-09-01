@@ -11,6 +11,7 @@ import GameModal from "@/components/GameModal";
 import Text from "@/components/Text";
 import Button from "@/components/Button";
 import { useSaveData } from "../lib/save-data";
+import GrandpaDialogue from "@/components/GrandpaDialogue";
 
 const MAX_HEALTH = 3;
 
@@ -132,6 +133,13 @@ export default function NonogramScreen() {
           Go back
         </Button>
       </GameModal>
+      {!hasCompletedTutorial && (
+        <GrandpaDialogue
+          delay={1000}
+          text={`Oh I love these! It's called a nonogram, and they're tons of fun!\n\nEach digit represents how many squares in that row or column must be filled in. If a single row or column has multiple digits, it means that the squares must be filled in that pattern, with at least one empty square between each group of filled squares.\n\nGood luck!`}
+          onComplete={() => setSaveData("hasCompletedNonogramTutorial", true)}
+        />
+      )}
     </ImageBackground>
   );
 }
