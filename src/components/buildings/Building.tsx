@@ -3,7 +3,9 @@ import {
   Animated,
   Image,
   ImageSourcePropType,
+  StyleSheet,
   useAnimatedValue,
+  View,
 } from "react-native";
 
 type Props = {
@@ -14,6 +16,8 @@ type Props = {
   x: number;
   y: number;
   dropDelay?: number;
+  position?: "absolute" | "relative";
+  children?: React.ReactNode;
 };
 
 export type BuildingProps = Pick<Props, "isVisible" | "x" | "y" | "dropDelay">;
@@ -26,6 +30,8 @@ export default function Building({
   x,
   y,
   dropDelay,
+  position = "absolute",
+  children,
 }: Props) {
   const animatedValue = useAnimatedValue(isVisible ? 1 : 0);
 
@@ -41,7 +47,7 @@ export default function Building({
   return (
     <Animated.View
       style={{
-        position: "absolute",
+        position,
         left: x,
         top: y,
         opacity: animatedValue.interpolate({
@@ -75,6 +81,7 @@ export default function Building({
         style={{ width, height: width / aspectRatio }}
         resizeMode="contain"
       />
+      <View style={StyleSheet.absoluteFill}>{children}</View>
     </Animated.View>
   );
 }

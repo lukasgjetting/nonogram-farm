@@ -1,19 +1,27 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PlantedSeed, SeedType } from "../constants/seeds";
 const SAVE_DATA_ASYNC_STORAGE_KEY = "nonogramFarm:saveData";
 
 export const INTRO_STEPS = ["sun", "house", "plants", "farm"] as const;
-
 export type IntroStep = (typeof INTRO_STEPS)[number];
 
 export type SaveData = {
   hasCompletedNonogramTutorial: boolean;
   introNextStep: IntroStep | null;
+  seeds: Partial<Record<SeedType, number>>;
+  points: number;
+  coins: number;
+  plantedSeed: PlantedSeed | null;
 };
 
 const initialData: SaveData = {
   introNextStep: "sun",
   hasCompletedNonogramTutorial: false,
+  seeds: { lettuce: 1 },
+  points: 0,
+  coins: 0,
+  plantedSeed: null,
 };
 
 type SaveDataContextValue = {
