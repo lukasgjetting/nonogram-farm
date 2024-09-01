@@ -39,6 +39,8 @@ export default function RootLayout() {
                 name="nonogram/[nonogramKey]"
                 options={{ headerShown: false, gestureEnabled: false }}
               />
+              <Stack.Screen name="shop" options={{ headerShown: false }} />
+              <Stack.Screen name="inventory" options={{ headerShown: false }} />
             </Stack>
           ) : null}
         </SaveDataProvider>
