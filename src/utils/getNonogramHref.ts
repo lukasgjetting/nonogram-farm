@@ -1,4 +1,4 @@
-import { NonogramKey } from "@/constants/nonograms.generated";
+import { NonogramKey } from "@/src/constants/nonograms.generated";
 
 const getNonogramHref = (srcKey: NonogramKey) => {
   return `/nonogram/${srcKey}` as const;

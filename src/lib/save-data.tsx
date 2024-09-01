@@ -70,7 +70,7 @@ export function SaveDataProvider({
 
       const newData = {
         ...prev,
-        [key]: initialData[key],
+        [key]: value,
       };
 
       AsyncStorage.setItem(

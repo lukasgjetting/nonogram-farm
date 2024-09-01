@@ -1,17 +1,20 @@
 import { BackHandler, ImageBackground, View } from "react-native";
-import Nonogram from "@/components/nonogram/Nonogram";
-import { NonogramKey, NonogramSources } from "@/constants/nonograms.generated";
+import Nonogram from "@/src/components/nonogram/Nonogram";
+import {
+  NonogramKey,
+  NonogramSources,
+} from "@/src/constants/nonograms.generated";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import Health from "@/components/nonogram/Health";
+import Health from "@/src/components/nonogram/Health";
 import AnimatedLottieView from "lottie-react-native";
-import { windowSize } from "@/constants/windowSize";
-import ScrollingBackgroundImage from "@/components/ScrollingBackgroundImage";
-import GameModal from "@/components/GameModal";
-import Text from "@/components/Text";
-import Button from "@/components/Button";
-import { useSaveData } from "../lib/save-data";
-import GrandpaDialogue from "@/components/GrandpaDialogue";
+import { windowSize } from "@/src/constants/windowSize";
+import ScrollingBackgroundImage from "@/src/components/ScrollingBackgroundImage";
+import GameModal from "@/src/components/GameModal";
+import Text from "@/src/components/Text";
+import Button from "@/src/components/Button";
+import { useSaveData } from "@/src/lib/save-data";
+import GrandpaDialogue from "@/src/components/GrandpaDialogue";
 
 const MAX_HEALTH = 3;
 
@@ -106,7 +109,7 @@ export default function NonogramScreen() {
             pointerEvents="none"
           >
             <AnimatedLottieView
-              source={require("../../assets/animations/confetti.json")}
+              source={require("@assets/animations/confetti.json")}
               autoPlay
               loop={false}
               style={{

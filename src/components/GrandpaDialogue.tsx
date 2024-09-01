@@ -8,11 +8,11 @@ import {
   View,
 } from "react-native";
 import Text from "./Text";
-import { windowSize } from "@/constants/windowSize";
+import { windowSize } from "@/src/constants/windowSize";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useRef, useState } from "react";
-import useSplitDialogueText from "@/utils/useSplitDialogueText";
+import useSplitDialogueText from "@/src/utils/useSplitDialogueText";
 
 const GRANDPA_ASPECT_RATIO = 0.725;
 const GRANDPA_WIDTH = windowSize.width * 0.25;

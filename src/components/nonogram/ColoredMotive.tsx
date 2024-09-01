@@ -1,7 +1,7 @@
 import {
   getNonogramColorMap,
   NonogramKey,
-} from "@/constants/nonograms.generated";
+} from "@/src/constants/nonograms.generated";
 import { useEffect, useRef } from "react";
 import { Animated, View } from "react-native";
 

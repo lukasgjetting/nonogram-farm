@@ -2,14 +2,14 @@ import {
   getNonogramTileMap,
   NonogramKey,
   NonogramSources,
-} from "@/constants/nonograms.generated";
+} from "@/src/constants/nonograms.generated";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import Tile from "./Tile";
 import getRowHeaderDigits from "./utils/getRowHeaderDigits";
 import useNonogramPanResponder from "./utils/useNonogramPanResponder";
-import { windowSize } from "@/constants/windowSize";
+import { windowSize } from "@/src/constants/windowSize";
 import Axis from "./Axis";
 import ColoredMotive from "./ColoredMotive";
 import Text from "../Text";

@@ -1,4 +1,4 @@
-import { NonogramKey, NonogramSources } from "@/constants/nonograms.generated";
+import { NonogramKey, NonogramSources } from "@/src/constants/nonograms.generated";
 import Text from "../Text";
 import { Animated, useAnimatedValue } from "react-native";
 import { useEffect } from "react";

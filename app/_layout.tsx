@@ -8,12 +8,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
 
-import { useColorScheme } from "@/utils/useColorScheme";
-import { SaveDataProvider } from "./lib/save-data";
-import {
-  SafeAreaInsetsContext,
-  SafeAreaProvider,
-} from "react-native-safe-area-context";
+import { useColorScheme } from "@/src/utils/useColorScheme";
+import { SaveDataProvider } from "@/src/lib/save-data";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

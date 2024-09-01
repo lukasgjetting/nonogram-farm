@@ -167,7 +167,7 @@ export default function Tile({
         ]}
       >
         <Animated.Image
-          source={require("../../assets/images/icons/xmark.png")}
+          source={require("@assets/images/icons/xmark.png")}
           style={{
             width: size * 0.35,
             height: size * 0.35,

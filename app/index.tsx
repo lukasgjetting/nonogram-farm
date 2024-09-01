@@ -1,11 +1,9 @@
 import { ImageBackground, StatusBar, View } from "react-native";
-import ScrollingBackgroundImage from "@/components/ScrollingBackgroundImage";
-import { windowSize } from "@/constants/windowSize";
-import { useSaveData } from "./lib/save-data";
-import hasCompletedIntroStep from "@/utils/hasCompletedIntroStep";
-import NightOverlay from "@/components/intro/NightOverlay";
-import GrandpaDialogue from "@/components/GrandpaDialogue";
-import SunIntroChapter from "@/components/intro/sun/SunIntroChapter";
+import ScrollingBackgroundImage from "@/src/components/ScrollingBackgroundImage";
+import { windowSize } from "@/src/constants/windowSize";
+import { useSaveData } from "@/src/lib/save-data";
+import hasCompletedIntroStep from "@/src/utils/hasCompletedIntroStep";
+import SunIntroChapter from "@/src/components/intro/sun/SunIntroChapter";
 
 export default function HomeScreen() {
   const [saveData, setSaveData] = useSaveData();
@@ -29,7 +27,11 @@ export default function HomeScreen() {
           />
         </View>
       </ImageBackground>
-      {!hasCompletedSun && <SunIntroChapter />}
+      {!hasCompletedSun && (
+        <SunIntroChapter
+          onComplete={() => setSaveData("introNextStep", "house")}
+        />
+      )}
     </View>
   );
 }

@@ -1,15 +1,19 @@
-import GrandpaDialogue from "@/components/GrandpaDialogue";
+import GrandpaDialogue from "@/src/components/GrandpaDialogue";
 import NightOverlay from "../NightOverlay";
-import useProgressionState from "@/utils/useProgressionState";
+import useProgressionState from "@/src/utils/useProgressionState";
 import { Animated, StyleSheet, View } from "react-native";
-import NonogramIcon from "@/components/NonogramIcon";
-import { windowSize } from "@/constants/windowSize";
-import useMultiStepTiming from "@/utils/useMultiStepTiming";
-import navigateToNonogramScreen from "@/utils/navigateToNonogramScreen";
+import NonogramIcon from "@/src/components/NonogramIcon";
+import { windowSize } from "@/src/constants/windowSize";
+import useMultiStepTiming from "@/src/utils/useMultiStepTiming";
+import navigateToNonogramScreen from "@/src/utils/navigateToNonogramScreen";
 
 const TOTAL_NONOGRAM_ANIMATION_DURATION = 3000;
 
-export default function SunIntroChapter() {
+type SunIntroChapterProps = {
+  onComplete: () => void;
+};
+
+export default function SunIntroChapter({ onComplete }: SunIntroChapterProps) {
   const {
     progress: [
       finishedGrandpaIntro,
@@ -36,7 +40,7 @@ export default function SunIntroChapter() {
       <GrandpaDialogue
         onComplete={onProgress}
         delay={1000}
-        text={`Hi! Welcome to your brand new farm! My name is Otto and I am your new neighbour. I was planning to invite you for a cup of coffee in the sun, but it seems we missed the last sunlight.\n\nIf only there was a way to get it back...`}
+        text={`Hi! Welcome to your brand new farm!\n\nMy name is Otto and I am your new neighbour. I was planning to invite you for a cup of coffee in the sun, but it seems we missed the last sunlight.\n\nIf only there was a way to get it back...`}
       />
       {finishedGrandpaIntro && (
         <View

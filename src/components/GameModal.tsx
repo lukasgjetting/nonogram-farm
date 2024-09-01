@@ -1,4 +1,4 @@
-import { windowSize } from "@/constants/windowSize";
+import { windowSize } from "@/src/constants/windowSize";
 import { ReactNode } from "react";
 import { Modal as NativeModal, StyleSheet, View } from "react-native";
 

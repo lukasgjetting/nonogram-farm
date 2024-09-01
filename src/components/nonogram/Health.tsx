@@ -85,7 +85,7 @@ export default function Health({ currentHealth, maxHealth }: HealthProps) {
       {new Array(maxHealth).fill(null).map((_, index) => (
         <View key={index}>
           <Image
-            source={require("../../assets/images/icons/heart.png")}
+            source={require("@assets/images/icons/heart.png")}
             style={{
               width: HEART_SIZE,
               height: HEART_SIZE,
@@ -94,7 +94,7 @@ export default function Health({ currentHealth, maxHealth }: HealthProps) {
             }}
           />
           <Animated.Image
-            source={require("../../assets/images/icons/heart.png")}
+            source={require("@assets/images/icons/heart.png")}
             style={[
               StyleSheet.absoluteFillObject,
               {

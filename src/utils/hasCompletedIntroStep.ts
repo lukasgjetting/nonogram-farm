@@ -1,4 +1,4 @@
-import { INTRO_STEPS, IntroStep, SaveData } from "@/app/lib/save-data";
+import { INTRO_STEPS, IntroStep, SaveData } from "@/src/lib/save-data";
 
 const hasCompletedIntroStep = (step: IntroStep, saveData: SaveData) => {
   if (saveData.introNextStep === null) {

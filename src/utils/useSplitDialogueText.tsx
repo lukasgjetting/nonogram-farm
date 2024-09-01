@@ -1,4 +1,4 @@
-import Text from "@/components/Text";
+import Text from "@/src/components/Text";
 import { useRef, useState } from "react";
 import { StyleSheet, TextStyle } from "react-native";
 
