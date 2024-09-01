@@ -9,7 +9,11 @@ import ValueChangeIndicator from "../ValueChangeIndicator";
 
 const BUTTON_SIZE = windowSize.width / 4.5;
 
-export default function BottomMenu() {
+type Props = {
+  showBackButton?: boolean;
+};
+
+export default function BottomMenu({ showBackButton }: Props) {
   const [{ coins, points }] = useSaveData();
   const insets = useSafeAreaInsets();
 
@@ -69,6 +73,7 @@ export default function BottomMenu() {
               <ValueChangeIndicator
                 change={coinsChange}
                 onComplete={() => setCoinsChange(0)}
+                style={{ right: 0 }}
               />
             </View>
             <Image
@@ -94,6 +99,7 @@ export default function BottomMenu() {
               <ValueChangeIndicator
                 change={pointsChange}
                 onComplete={() => setPointsChange(0)}
+                style={{ right: 0 }}
               />
             </View>
             <Image
@@ -110,24 +116,47 @@ export default function BottomMenu() {
           justifyContent: "space-around",
         }}
       >
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => router.navigate("/shop")}
-        >
-          <Image
-            source={require("@/assets/images/shop-button.png")}
-            style={{ width: BUTTON_SIZE, height: BUTTON_SIZE }}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => router.navigate("/inventory")}
-        >
-          <Image
-            source={require("@/assets/images/inventory-button.png")}
-            style={{ width: BUTTON_SIZE, height: BUTTON_SIZE }}
-          />
-        </TouchableOpacity>
+        {showBackButton ? (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => router.back()}
+            style={{ alignItems: "center", paddingVertical: 16 }}
+          >
+            <Text style={{ fontSize: 20, color: "white", textAlign: "center" }}>
+              Go back to farm
+            </Text>
+            <Image
+              source={require("@/assets/images/back-to-farm-arrow.png")}
+              style={{
+                width: "60%",
+                height: 40,
+                resizeMode: "contain",
+                tintColor: "white",
+              }}
+            />
+          </TouchableOpacity>
+        ) : (
+          <>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => router.navigate("/shop")}
+            >
+              <Image
+                source={require("@/assets/images/shop-button.png")}
+                style={{ width: BUTTON_SIZE, height: BUTTON_SIZE }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => router.navigate("/inventory")}
+            >
+              <Image
+                source={require("@/assets/images/inventory-button.png")}
+                style={{ width: BUTTON_SIZE, height: BUTTON_SIZE }}
+              />
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     </View>
   );

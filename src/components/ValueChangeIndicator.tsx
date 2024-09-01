@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Animated, useAnimatedValue } from "react-native";
+import { Animated, StyleProp, useAnimatedValue, ViewStyle } from "react-native";
 import Text from "./Text";
 
 const POSITIVE_CHANGE_COLOR = "#16a34a";
@@ -8,11 +8,13 @@ const NEGATIVE_CHANGE_COLOR = "#dc2626";
 type ValueChangeIndicatorProps = {
   change: number;
   onComplete: () => void;
+  style?: StyleProp<ViewStyle>;
 };
 
 export default function ValueChangeIndicator({
   change,
   onComplete,
+  style,
 }: ValueChangeIndicatorProps) {
   const animatedValue = useAnimatedValue(0);
 
@@ -38,22 +40,24 @@ export default function ValueChangeIndicator({
   return (
     <Animated.View
       pointerEvents={"none"}
-      style={{
-        position: "absolute",
-        right: 0,
-        opacity: animatedValue.interpolate({
-          inputRange: [0, 0.1, 1],
-          outputRange: [0, 1, 0],
-        }),
-        transform: [
-          {
-            translateY: animatedValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, -24],
-            }),
-          },
-        ],
-      }}
+      style={[
+        {
+          position: "absolute",
+          opacity: animatedValue.interpolate({
+            inputRange: [0, 0.1, 1],
+            outputRange: [0, 1, 0],
+          }),
+          transform: [
+            {
+              translateY: animatedValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, -24],
+              }),
+            },
+          ],
+        },
+        style,
+      ]}
     >
       <Text
         style={{

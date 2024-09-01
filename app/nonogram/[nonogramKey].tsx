@@ -80,6 +80,7 @@ export default function NonogramScreen() {
         justifyContent: "center",
         backgroundColor: "white",
         alignItems: "center",
+        overflow: "hidden",
       }}
     >
       <ScrollingBackgroundImage

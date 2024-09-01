@@ -13,6 +13,7 @@ export type SaveData = {
   points: number;
   coins: number;
   plantedSeed: PlantedSeed | null;
+  nonograms: number;
 };
 
 const initialData: SaveData = {
@@ -22,6 +23,7 @@ const initialData: SaveData = {
   points: 0,
   coins: 0,
   plantedSeed: null,
+  nonograms: 0,
 };
 
 type SaveDataContextValue = {

@@ -33,7 +33,10 @@
       [
         "expo-font",
         {
-          "fonts": ["node_modules/@expo-google-fonts/grandstander/Grandstander_400Regular.ttf"]
+          "fonts": [
+            "node_modules/@expo-google-fonts/grandstander/Grandstander_400Regular.ttf",
+            "node_modules/@expo-google-fonts/grandstander/Grandstander_600SemiBold.ttf"
+          ]
         }
       ]
     ],
