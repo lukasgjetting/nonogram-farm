@@ -3,7 +3,7 @@ a=#f59e0b
 b=#fbbf24
 A=#06b6d4
 B=#fcd34d
-AabA
+AaaA
 aaba
-AaBa
+BaBa
 AbaA

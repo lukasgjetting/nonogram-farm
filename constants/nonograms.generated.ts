@@ -1,7 +1,7 @@
 export const NonogramSources = {
   "intro.sun": {
     "name": "Sun",
-    "content": "AabA\naaba\nAaBa\nAbaA",
+    "content": "AaaA\naaba\nBaBa\nAbaA",
     "colors": {"a":"#f59e0b","b":"#fbbf24","A":"#06b6d4","B":"#fcd34d"}
   },
   "intro.simple": {
