@@ -1,5 +1,11 @@
 import { useEffect } from "react";
-import { Animated, StyleProp, useAnimatedValue, ViewStyle } from "react-native";
+import {
+  Animated,
+  StyleProp,
+  TextStyle,
+  useAnimatedValue,
+  ViewStyle,
+} from "react-native";
 import Text from "./Text";
 
 const POSITIVE_CHANGE_COLOR = "#16a34a";
@@ -9,12 +15,14 @@ type ValueChangeIndicatorProps = {
   change: number;
   onComplete: () => void;
   style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
 };
 
 export default function ValueChangeIndicator({
   change,
   onComplete,
   style,
+  textStyle,
 }: ValueChangeIndicatorProps) {
   const animatedValue = useAnimatedValue(0);
 
@@ -60,10 +68,13 @@ export default function ValueChangeIndicator({
       ]}
     >
       <Text
-        style={{
-          fontSize: 18,
-          color: change > 0 ? POSITIVE_CHANGE_COLOR : NEGATIVE_CHANGE_COLOR,
-        }}
+        style={[
+          {
+            fontSize: 18,
+            color: change > 0 ? POSITIVE_CHANGE_COLOR : NEGATIVE_CHANGE_COLOR,
+          },
+          textStyle,
+        ]}
       >
         {`${change > 0 ? "+" : "-"}${Math.abs(change)}`}
       </Text>

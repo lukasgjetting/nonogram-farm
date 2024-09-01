@@ -4,7 +4,7 @@ import { NonogramKey } from "../constants/nonograms.generated";
 const listeners = new Map<NonogramKey, Map<number, () => void>>();
 
 export const useNonogramCompletionListener = (
-  nonogramKey: NonogramKey,
+  nonogramKey: NonogramKey | undefined,
   onComplete: () => void,
 ) => {
   const id = useRef(Math.random()).current;
@@ -13,6 +13,10 @@ export const useNonogramCompletionListener = (
   onCompleteRef.current = onComplete;
 
   useEffect(() => {
+    if (!nonogramKey) {
+      return;
+    }
+
     if (!listeners.has(nonogramKey)) {
       listeners.set(nonogramKey, new Map());
     }

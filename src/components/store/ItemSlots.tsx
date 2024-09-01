@@ -10,7 +10,7 @@ export const ITEM_SIZE = windowSize.width / 3 - 48;
 const ITEMS_PER_ROW = 3;
 const NUMBER_OF_ROWS = 3;
 
-type Item<TExtra> = {
+export type Item<TExtra> = {
   id: string;
   image: ImageSourcePropType;
   extra: TExtra;

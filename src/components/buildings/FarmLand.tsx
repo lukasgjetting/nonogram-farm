@@ -16,7 +16,6 @@ import {
   PlantedSeed,
   SEED_GROWTH_TIME,
   SEED_STAGE_IMAGES,
-  SeedType,
 } from "@/src/constants/seeds";
 import getSeedStage from "@/src/utils/getSeedStage";
 import useHarvest from "@/src/utils/useHarvest";
@@ -114,6 +113,7 @@ export default function FarmLand(props: BuildingProps) {
 
   useEffect(() => {
     pulseAnimatedValue.stopAnimation();
+    pulseAnimatedValue.setValue(0);
 
     if (plantedSeed != null) {
       return;

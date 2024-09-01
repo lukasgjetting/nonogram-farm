@@ -1,21 +1,14 @@
 import { ImageSourcePropType } from "react-native";
 
-export const SEED_TYPES = [
-  "lettuce",
-  "carrot",
-  "tomato",
-  "watermelon",
-  "pineapple",
-] as const;
+export const SEED_TYPES = ["lettuce", "carrot", "tomato", "pineapple"] as const;
 
 export type SeedType = (typeof SEED_TYPES)[number];
 
 export const SEED_BAG_IMAGES: Record<SeedType, ImageSourcePropType> = {
   lettuce: require("@/assets/images/seed-bags/lettuce.png"),
-  carrot: require("@/assets/images/seed-bags/lettuce.png"),
-  tomato: require("@/assets/images/seed-bags/lettuce.png"),
-  watermelon: require("@/assets/images/seed-bags/lettuce.png"),
-  pineapple: require("@/assets/images/seed-bags/lettuce.png"),
+  carrot: require("@/assets/images/seed-bags/carrot.png"),
+  tomato: require("@/assets/images/seed-bags/tomato.png"),
+  pineapple: require("@/assets/images/seed-bags/pineapple.png"),
 };
 
 export type SeedStageImage = {
