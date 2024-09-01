@@ -1,4 +1,9 @@
 export const NonogramSources = {
+  "seeds.pineapple-slice": {
+    "name": "Pineapple Slice",
+    "content": "AaabAAAA\nddabAAbb\nBBddAbbc\nBBBedbcc\nBBeeedcA\nBeeefdAA\nBeefffdA\nBfffffdA",
+    "colors": {"A":"#F3E3FF","B":"#FFF59A","a":"#AED293","b":"#8AAC71","c":"#5E8C3E","d":"#DAB95D","e":"#FFE382","f":"#FFDC62"}
+  },
   "seeds.pina-colada": {
     "name": "Pina Colada",
     "content": "aaAAaaAbcAAA\naaaAAAAABcAA\nAAdAAeeBebAA\nfdggggeBeggg\nfdhhCCeieCCC\nClChCeiiieCC\nClCCCejjjeCC\nClCCCekjkeCC\nCCCCmmeeemmm\nCCmmDDDeDDDD\nCmmDDDeeennn\nCmDDDDDnnnnn",

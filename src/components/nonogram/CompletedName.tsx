@@ -1,4 +1,7 @@
-import { NonogramKey, NonogramSources } from "@/src/constants/nonograms.generated";
+import {
+  NonogramKey,
+  NonogramSources,
+} from "@/src/constants/nonograms.generated";
 import Text from "../Text";
 import { Animated, useAnimatedValue } from "react-native";
 import { useEffect } from "react";
@@ -13,7 +16,7 @@ export default function CompletedName({ nonogramKey }: Props) {
     Animated.spring(animatedValue, {
       toValue: 1,
       useNativeDriver: true,
-      delay: 250,
+      delay: 1000,
     }).start();
   }, [animatedValue]);
 
@@ -25,7 +28,7 @@ export default function CompletedName({ nonogramKey }: Props) {
           {
             translateY: animatedValue.interpolate({
               inputRange: [0, 1],
-              outputRange: [10, 0],
+              outputRange: [30, 10],
             }),
           },
         ],

@@ -234,87 +234,91 @@ export default function Nonogram({
             allDigits={horizontalHeader}
             tileSize={tileSize}
           />
-          <View
-            style={{
-              padding: TILE_GAP,
-              backgroundColor: "#f0f0f0",
-              overflow: "hidden",
-            }}
-            {...panResponder.panHandlers}
-          >
-            {horizontalSectionSize > 0 &&
-              new Array(Math.round(tilesInRow / horizontalSectionSize) - 1)
-                .fill(null)
-                .map((_, index) => (
-                  <SectionLine
-                    key={`vertical-${index}`}
-                    direction="vertical"
+          <View>
+            <View
+              style={{
+                padding: TILE_GAP,
+                backgroundColor: "#f0f0f0",
+                overflow: "hidden",
+              }}
+              {...panResponder.panHandlers}
+            >
+              {horizontalSectionSize > 0 &&
+                new Array(Math.round(tilesInRow / horizontalSectionSize) - 1)
+                  .fill(null)
+                  .map((_, index) => (
+                    <SectionLine
+                      key={`vertical-${index}`}
+                      direction="vertical"
+                      tileSize={tileSize}
+                      tileGap={TILE_GAP}
+                      index={(index + 1) * horizontalSectionSize}
+                    />
+                  ))}
+              {verticalSectionSize > 0 &&
+                new Array(Math.round(tileMap.length / verticalSectionSize) - 1)
+                  .fill(null)
+                  .map((_, index) => (
+                    <SectionLine
+                      key={`horizontal-${index}`}
+                      direction="horizontal"
+                      tileSize={tileSize}
+                      tileGap={TILE_GAP}
+                      index={(index + 1) * verticalSectionSize}
+                    />
+                  ))}
+              <View style={{ gap: TILE_GAP }} pointerEvents="none">
+                {tileMap?.map((row, rowIndex) => (
+                  <View
+                    key={rowIndex}
+                    style={{ flexDirection: "row", gap: TILE_GAP }}
+                  >
+                    {row.map((tileValue, columnIndex) => {
+                      const isRevealed =
+                        revealedTiles[rowIndex]?.[columnIndex] ?? false;
+                      return (
+                        <Tile
+                          key={columnIndex}
+                          size={tileSize}
+                          rowIndex={rowIndex}
+                          columnIndex={columnIndex}
+                          isRowCompleted={rowsCompleted[rowIndex] ?? false}
+                          isColumnCompleted={
+                            columnsCompleted[columnIndex] ?? false
+                          }
+                          state={
+                            isRevealed
+                              ? tileValue
+                                ? "filled"
+                                : "crossed"
+                              : "empty"
+                          }
+                        />
+                      );
+                    })}
+                  </View>
+                ))}
+              </View>
+              {isCompleted && (
+                <View style={StyleSheet.absoluteFill}>
+                  <ColoredMotive
+                    nonogramKey={srcKey}
                     tileSize={tileSize}
                     tileGap={TILE_GAP}
-                    index={(index + 1) * horizontalSectionSize}
                   />
-                ))}
-            {verticalSectionSize > 0 &&
-              new Array(Math.round(tileMap.length / verticalSectionSize) - 1)
-                .fill(null)
-                .map((_, index) => (
-                  <SectionLine
-                    key={`horizontal-${index}`}
-                    direction="horizontal"
-                    tileSize={tileSize}
-                    tileGap={TILE_GAP}
-                    index={(index + 1) * verticalSectionSize}
-                  />
-                ))}
-            <View style={{ gap: TILE_GAP }} pointerEvents="none">
-              {tileMap?.map((row, rowIndex) => (
-                <View
-                  key={rowIndex}
-                  style={{ flexDirection: "row", gap: TILE_GAP }}
-                >
-                  {row.map((tileValue, columnIndex) => {
-                    const isRevealed =
-                      revealedTiles[rowIndex]?.[columnIndex] ?? false;
-                    return (
-                      <Tile
-                        key={columnIndex}
-                        size={tileSize}
-                        rowIndex={rowIndex}
-                        columnIndex={columnIndex}
-                        isRowCompleted={rowsCompleted[rowIndex] ?? false}
-                        isColumnCompleted={
-                          columnsCompleted[columnIndex] ?? false
-                        }
-                        state={
-                          isRevealed
-                            ? tileValue
-                              ? "filled"
-                              : "crossed"
-                            : "empty"
-                        }
-                      />
-                    );
-                  })}
                 </View>
-              ))}
+              )}
             </View>
             {isCompleted && (
-              <View style={StyleSheet.absoluteFill}>
-                <ColoredMotive
-                  nonogramKey={srcKey}
-                  tileSize={tileSize}
-                  tileGap={TILE_GAP}
-                />
-                <View
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: -32,
-                  }}
-                >
-                  <CompletedName nonogramKey={srcKey} />
-                </View>
+              <View
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: -32,
+                }}
+              >
+                <CompletedName nonogramKey={srcKey} />
               </View>
             )}
           </View>

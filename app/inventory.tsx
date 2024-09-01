@@ -2,7 +2,6 @@ import NewItemModal from "@/src/components/interfaces/NewItemModal";
 import BottomMenu from "@/src/components/interfaces/BottomMenu";
 import Header from "@/src/components/store/Header";
 import ItemSlots, { Item } from "@/src/components/store/ItemSlots";
-import Text from "@/src/components/Text";
 import { NonogramKey } from "@/src/constants/nonograms.generated";
 import {
   SEED_BAG_IMAGES,
@@ -16,18 +15,21 @@ import navigateToNonogramScreen from "@/src/utils/navigateToNonogramScreen";
 import { useState } from "react";
 import { Alert, ImageBackground, StatusBar, View } from "react-native";
 import formatTimeLabel from "@/src/utils/formatTimeLabel";
+import QuantityIndicator from "@/src/components/QuantityIndicator";
 
 const ELIGIBLE_SEED_NONOGRAMS = [
   //"intro.house",
   //"intro.sun",
   //"intro.simple",
   "seeds.pina-colada",
+  "seeds.pineapple-slice",
 ] satisfies NonogramKey[];
 
 type EligibleSeedNonogramKey = (typeof ELIGIBLE_SEED_NONOGRAMS)[number];
 
 const SEED_BY_NONOGRAM_KEY: Record<EligibleSeedNonogramKey, SeedType> = {
   "seeds.pina-colada": "pineapple",
+  "seeds.pineapple-slice": "pineapple",
 };
 
 export default function InventoryScreen() {
@@ -106,31 +108,10 @@ export default function InventoryScreen() {
               }
             }}
             renderExtra={(item) => (
-              <>
-                <ImageBackground
-                  source={require("@assets/images/progress-background.png")}
-                  style={{
-                    position: "absolute",
-                    top: -8,
-                    right: -2,
-                    borderRadius: 100,
-                    overflow: "hidden",
-                    height: 24,
-                    width: 24,
-                    alignItems: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      textAlign: "center",
-                      top: 4,
-                    }}
-                  >
-                    {item.extra}
-                  </Text>
-                </ImageBackground>
-              </>
+              <QuantityIndicator
+                quantity={item.extra}
+                style={{ position: "absolute", top: -8, right: -2 }}
+              />
             )}
           />
         </View>
