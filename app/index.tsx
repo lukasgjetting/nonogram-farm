@@ -1,13 +1,11 @@
-import { ImageBackground, StatusBar, StyleSheet, View } from "react-native";
-import { Link } from "expo-router";
-import getNonogramHref from "@/utils/getNonogramHref";
-import Text from "@/components/Text";
+import { ImageBackground, StatusBar, View } from "react-native";
 import ScrollingBackgroundImage from "@/components/ScrollingBackgroundImage";
 import { windowSize } from "@/constants/windowSize";
 import { useSaveData } from "./lib/save-data";
 import hasCompletedIntroStep from "@/utils/hasCompletedIntroStep";
 import NightOverlay from "@/components/intro/NightOverlay";
 import GrandpaDialogue from "@/components/GrandpaDialogue";
+import SunIntroChapter from "@/components/intro/sun/SunIntroChapter";
 
 export default function HomeScreen() {
   const [saveData, setSaveData] = useSaveData();
@@ -18,7 +16,7 @@ export default function HomeScreen() {
     <View style={{ flex: 1 }}>
       <StatusBar barStyle={"dark-content"} />
       <ImageBackground
-        style={{ flex: 1, justifyContent: "center", backgroundColor: "red" }}
+        style={{ flex: 1, justifyContent: "center" }}
         imageStyle={{ resizeMode: "cover" }}
         source={require("@assets/images/farm.png")}
       >
@@ -31,14 +29,7 @@ export default function HomeScreen() {
           />
         </View>
       </ImageBackground>
-      {!hasCompletedSun && (
-        <>
-          <NightOverlay />
-          <GrandpaDialogue
-            text={`Hello dear!\n\nI'm so glad you are here! Truly very fortunate cause I am in trouble. Big trouble! To hear more about all my troubles, please tell me a bit about yourself and how you are doing. Do you like doing this whole farming thing?`}
-          />
-        </>
-      )}
+      {!hasCompletedSun && <SunIntroChapter />}
     </View>
   );
 }

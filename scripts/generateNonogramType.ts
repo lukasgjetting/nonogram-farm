@@ -23,10 +23,12 @@ const nonograms = files.map((rawFile) => {
       return { letter: letter!, color: color! };
     });
 
-  const contentLines = lines.filter((line) => !line.includes("="));
+  const contentLines = lines.filter((line) => line.match(/^[a-zA-Z]$/) != null);
+  const nameLine = lines.find((line) => line.match(/^<.*>$/) != null);
 
   return {
     key,
+    name: nameLine?.replace(/[<>]/g, ""),
     colors: colors.reduce(
       (obj, { letter, color }) => ({
         ...obj,
@@ -41,8 +43,9 @@ const nonograms = files.map((rawFile) => {
 const output = `export const NonogramSources = {
   ${nonograms
     .map(
-      ({ key, colors, content }) =>
+      ({ key, name, colors, content }) =>
         `"${key}": {
+    "name": "${name}",
     "content": "${content}",
     "colors": ${JSON.stringify(colors)}
   }`,

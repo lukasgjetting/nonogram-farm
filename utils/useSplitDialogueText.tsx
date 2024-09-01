@@ -1,17 +1,16 @@
 import Text from "@/components/Text";
 import { useRef, useState } from "react";
-import { SectionListComponent, StyleSheet, TextStyle } from "react-native";
+import { StyleSheet, TextStyle } from "react-native";
 
-const ellipsisText = "(...)";
+const ellipsisText = "→";
 
 const useSplitDialogueText = (
   text: string,
   textStyle: TextStyle,
   maxLines: number,
 ) => {
-  const [isReady, setIsReady] = useState(false);
-  const [sections, setSections] = useState<string[]>([]);
-  const [newText, setNewText] = useState(text);
+  const [sections, setSections] = useState<string[]>();
+  const [textToMeasure, setTextToMeasure] = useState(text);
 
   const valuesRef = useRef<{
     ellipsisWidth?: number;
@@ -33,7 +32,7 @@ const useSplitDialogueText = (
 
     let currentSectionLines: string[] = [];
 
-    const linesToUse = [...originalLines];
+    const linesToUse = originalLines.map((l) => ({ ...l }));
 
     const commitSection = () => {
       sections.push(currentSectionLines.join(""));
@@ -45,61 +44,65 @@ const useSplitDialogueText = (
 
       currentSectionLines.push(line.text);
 
+      // If this was the last line, commit section -> done (by setting sections state)
+      if (i === linesToUse.length - 1) {
+        commitSection();
+        setSections(sections);
+        return;
+      }
+
       // If not at max lines, just continue
       if (currentSectionLines.length < maxLines) {
         continue;
       }
 
-      // If this was the last line, commit section -> done
-      if (i === linesToUse.length - 1) {
-        commitSection();
-        break;
-      }
+      // OK - if we reach this, we need to add an ellipsis since we are
+      // at max lines of this section and there are more lines to show
 
-      // We need to add an ellipsis
-
-      console.log("last line width", {
-        lineWidth: line.width,
-        ellipsisWidth,
-        containerWidth,
-        fits: line.width + ellipsisWidth <= containerWidth,
-      });
-
-      // If it can fit, easy! Just append, commit section and continue
-      if (line.width + ellipsisWidth <= containerWidth) {
-        currentSectionLines[currentSectionLines.length - 1] += ellipsisText;
+      // If the line already ends with ellipsis, commit section and continue
+      if (
+        line.text.endsWith(ellipsisText) ||
+        line.text.endsWith(`${ellipsisText} `)
+      ) {
         commitSection();
         continue;
       }
 
-      // Otherwise we need to move a word to next line and re-run measurement
+      // If it can fit, easy! Just append, commit section and continue
+      if (line.width + ellipsisWidth <= containerWidth) {
+        commitSection();
+        continue;
+      }
+
+      // Since it doesn't fit we need to move a word to next line and re-run measurement
       const lineWords = line.text.trimEnd().split(" ");
-      // Pop two to include the trailing space
       const lastWord = lineWords.pop();
 
-      console.log("newlastline", `${lineWords.join(" ")} ${ellipsisText}`);
-      currentSectionLines.push(`${lineWords.join(" ")} ${ellipsisText}`);
+      currentSectionLines[currentSectionLines.length - 1]! =
+        currentSectionLines[currentSectionLines.length - 1]!.replace(
+          new RegExp(`${lastWord?.replaceAll("?", "\\?")} ?$`),
+          ellipsisText,
+        );
       commitSection();
 
       // Move word to next work
       linesToUse[i + 1]!.text = `${lastWord} ${linesToUse[i + 1]!.text}`;
 
-      if (i + 1 === linesToUse.length - 1) {
-        currentSectionLines.push(...linesToUse.slice(i + 1).map((l) => l.text));
-        commitSection();
-      }
-    }
+      // Commit the remaining lines to a new section
+      currentSectionLines.push(...linesToUse.slice(i + 1).map((l) => l.text));
+      commitSection();
 
-    console.log({ originalLines: originalLines.map((l) => l.text), sections });
-    setSections(sections);
-    setNewText(sections.join("\n"));
-    setIsReady(true);
+      // Reset lines and re-run measurement
+      valuesRef.current.originalLines = undefined;
+      setTextToMeasure(sections.map((s) => s.trim()).join(" "));
+      break;
+    }
   };
 
   const measurementNodes = (
     <>
       <Text
-        style={textStyle}
+        style={[textStyle, { opacity: 0 }]}
         onTextLayout={(e) => {
           valuesRef.current.ellipsisWidth = e.nativeEvent.lines[0]?.width ?? 50;
           calculateNewLines();
@@ -122,15 +125,15 @@ const useSplitDialogueText = (
           calculateNewLines();
         }}
       >
-        {text}
+        {textToMeasure}
       </Text>
     </>
   );
 
   return {
     measurementNodes,
-    isReady,
-    sections,
+    isReady: sections != null,
+    sections: sections ?? [],
   };
 };
 

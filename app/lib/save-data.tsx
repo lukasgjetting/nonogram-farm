@@ -14,11 +14,13 @@ export const INTRO_STEPS = [
 export type IntroStep = (typeof INTRO_STEPS)[number];
 
 export type SaveData = {
+  hasCompletedNonogramTutorial: boolean;
   introNextStep: IntroStep | null;
 };
 
 const initialData: SaveData = {
   introNextStep: "sun",
+  hasCompletedNonogramTutorial: false,
 };
 
 type SaveDataContextValue = {

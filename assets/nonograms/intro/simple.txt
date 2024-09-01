@@ -1,3 +1,5 @@
+<Demo>
+x=#000
 x-x
 xxx
 x--

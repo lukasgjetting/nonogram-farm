@@ -10,10 +10,14 @@ import ScrollingBackgroundImage from "@/components/ScrollingBackgroundImage";
 import GameModal from "@/components/GameModal";
 import Text from "@/components/Text";
 import Button from "@/components/Button";
+import { useSaveData } from "../lib/save-data";
 
 const MAX_HEALTH = 3;
 
 export default function NonogramScreen() {
+  const [saveData, setSaveData] = useSaveData();
+  const hasCompletedTutorial = saveData.hasCompletedNonogramTutorial;
+
   const params = useLocalSearchParams<{ nonogramKey: string }>();
   const isValidKey = Object.keys(NonogramSources).includes(params.nonogramKey);
 

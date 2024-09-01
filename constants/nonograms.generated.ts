@@ -1,10 +1,17 @@
 export const NonogramSources = {
+  "intro.sun": {
+    "name": "Sun",
+    "content": "",
+    "colors": {"a":"#f59e0b","b":"#fbbf24","A":"#06b6d4"}
+  },
   "intro.simple": {
-    "content": "x-x\nxxx\nx--",
-    "colors": {}
+    "name": "Demo",
+    "content": "",
+    "colors": {"x":"#000"}
   },
   "intro.house": {
-    "content": "ZZZaZZZ\nZZaaaZZ\nZaaaaaZ\naaaaaaa\nZcYcXcZ\nZcYcccZ\nbbbbbbb",
+    "name": "House",
+    "content": "",
     "colors": {"a":"#422006","b":"#052e16","c":"#713f12","X":"#ccfbf1","Y":"#450a0a","Z":"#7dd3fc"}
   }
 } as const;
