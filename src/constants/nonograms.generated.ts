@@ -1,4 +1,9 @@
 export const NonogramSources = {
+  "seeds.pina-colada": {
+    "name": "Pina Colada",
+    "content": "aaAAaaAbcAAA\naaaAAAAABcAA\nAAdAAeeBebAA\nfdggggeBeggg\nfdhhCCeieCCC\nClChCeiiieCC\nClCCCejjjeCC\nClCCCekjkeCC\nCCCCmmeeemmm\nCCmmDDDeDDDD\nCmmDDDeeennn\nCmDDDDDnnnnn",
+    "colors": {"A":"#BCEBFF","B":"#E4E4E4","C":"#FBFFC9","D":"#C3A77D","a":"#D5F2FF","b":"#DE5D8B","c":"#EC749F","d":"#8AAC71","e":"#E7FFFE","f":"#AED293","g":"#74B6F2","h":"#5E8C3E","i":"#FFF59A","j":"#FFDC62","k":"#DAB95D","l":"#735233","m":"#A1865D","n":"#A69A88"}
+  },
   "intro.tree": {
     "name": "Tree",
     "content": "ZZZZaaZZZZ\nZZZaaaaZZZ\nZZYaaaaaZZ\nZZababaaZZ\nZZZabaaZZZ\nZZZZbbZZZZ\nZaaZbbbaZZ\nZZabbbbZZZ\nZZZZXbZZbb\nWWWbbbbWWW",

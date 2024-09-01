@@ -18,19 +18,16 @@ import { Alert, ImageBackground, StatusBar, View } from "react-native";
 import formatTimeLabel from "@/src/utils/formatTimeLabel";
 
 const ELIGIBLE_SEED_NONOGRAMS = [
-  "intro.house",
-  "intro.sun",
-  "intro.simple",
-  "intro.tree",
+  //"intro.house",
+  //"intro.sun",
+  //"intro.simple",
+  "seeds.pina-colada",
 ] satisfies NonogramKey[];
 
 type EligibleSeedNonogramKey = (typeof ELIGIBLE_SEED_NONOGRAMS)[number];
 
 const SEED_BY_NONOGRAM_KEY: Record<EligibleSeedNonogramKey, SeedType> = {
-  "intro.house": "lettuce",
-  "intro.sun": "carrot",
-  "intro.simple": "tomato",
-  "intro.tree": "pineapple",
+  "seeds.pina-colada": "pineapple",
 };
 
 export default function InventoryScreen() {

@@ -87,7 +87,7 @@ export default function NonogramScreen() {
         source={require("@/assets/images/clouds.png")}
         aspectRatio={1.46}
         height={windowSize.height}
-        speed={0.15}
+        speed={0.09}
       />
       <Health maxHealth={MAX_HEALTH} currentHealth={health} />
       <View style={{ height: 8 }} />

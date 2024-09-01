@@ -1,18 +1,19 @@
 import { View } from "react-native";
-import Text from "../Text";
+import { memo } from "react";
+import AxisLine from "./AxisLine";
 
 export type VerticalAxisProps = {
   allDigits: number[][];
+  completedIndexes: number[];
   tileSize: number;
   tileGap: number;
   digitSize: number;
   direction: "vertical" | "horizontal";
 };
 
-const BACKGROUND_COLOR = "#0ea5e933";
-
-export default function Axis({
+export default memo(function Axis({
   allDigits,
+  completedIndexes,
   tileSize,
   tileGap,
   digitSize,
@@ -28,54 +29,16 @@ export default function Axis({
       ]}
     >
       {allDigits.map((digits, index) => (
-        <View
+        <AxisLine
           key={index}
-          style={[
-            {
-              gap: tileGap,
-              alignItems: "center",
-            },
-            direction === "vertical"
-              ? {
-                  height: tileSize,
-                  backgroundColor: BACKGROUND_COLOR,
-                  justifyContent: "flex-end",
-                  flexDirection: "row",
-                  borderBottomLeftRadius: 15,
-                  borderTopLeftRadius: 15,
-                  paddingHorizontal: 5,
-                }
-              : {
-                  width: tileSize,
-                  backgroundColor: BACKGROUND_COLOR,
-                  justifyContent: "flex-end",
-                  borderTopLeftRadius: 15,
-                  borderTopRightRadius: 15,
-                  paddingVertical: 5,
-                },
-          ]}
-        >
-          {digits.map((digit, digitIndex) => (
-            <View
-              key={digitIndex}
-              style={{
-                width: digitSize,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontSize: digitSize,
-                }}
-              >
-                {digit}
-              </Text>
-            </View>
-          ))}
-        </View>
+          direction={direction}
+          digits={digits}
+          isCompleted={completedIndexes.includes(index)}
+          digitSize={digitSize}
+          tileSize={tileSize}
+          tileGap={tileGap}
+        />
       ))}
     </View>
   );
-}
+});

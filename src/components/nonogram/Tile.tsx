@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Animated, StyleSheet } from "react-native";
 
 const FILLED_COLOR = "#082f49";
@@ -19,7 +19,7 @@ export type TileProps = {
   isColumnCompleted: boolean;
 };
 
-export default function Tile({
+export default memo(function Tile({
   size,
   state,
   rowIndex,
@@ -206,4 +206,4 @@ export default function Tile({
       />
     </Animated.View>
   );
-}
+});

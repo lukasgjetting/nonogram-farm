@@ -1,9 +1,8 @@
 import {
   getNonogramTileMap,
   NonogramKey,
-  NonogramSources,
 } from "@/src/constants/nonograms.generated";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import Tile from "./Tile";
@@ -12,8 +11,8 @@ import useNonogramPanResponder from "./utils/useNonogramPanResponder";
 import { windowSize } from "@/src/constants/windowSize";
 import Axis from "./Axis";
 import ColoredMotive from "./ColoredMotive";
-import Text from "../Text";
 import CompletedName from "./CompletedName";
+import SectionLine from "./SectionLine";
 
 export const DEFAULT_NONOGRAM_MARGIN = 16;
 export const FULLSCREEN_NONOGRAM_SIZE =
@@ -21,7 +20,7 @@ export const FULLSCREEN_NONOGRAM_SIZE =
 
 const TILE_GAP = 2;
 
-const HEADER_DIGIT_SIZE = 20;
+const HEADER_DIGIT_SIZE = 18;
 
 export type TileMap = boolean[][];
 
@@ -30,6 +29,22 @@ export type NonogramProps = {
   onGuessWrong: () => void;
   onComplete: () => void;
   isCompleted: boolean;
+};
+
+const getSectionSize = (size: number) => {
+  if (size % 5 === 0) {
+    return 5;
+  }
+
+  if (size % 4 === 0) {
+    return 4;
+  }
+
+  if (size % 3 === 0) {
+    return 3;
+  }
+
+  return 0;
 };
 
 export default function Nonogram({
@@ -61,6 +76,23 @@ export default function Nonogram({
           (revealedTiles[rowIndex]?.[colIndex] ?? false),
       ),
     );
+
+  const completedRowIndexes = useMemo(
+    () =>
+      rowsCompleted
+        .map((completed, index) => (completed ? index : null))
+        .filter((index) => index != null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [...rowsCompleted],
+  );
+  const completedColumnIndexes = useMemo(
+    () =>
+      columnsCompleted
+        .map((completed, index) => (completed ? index : null))
+        .filter((index) => index != null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [...columnsCompleted],
+  );
 
   useEffect(() => {
     setTileMap(getNonogramTileMap(srcKey));
@@ -137,14 +169,19 @@ export default function Nonogram({
     return isCorrect;
   };
 
-  const verticalHeader = tileMap.map((row) => getRowHeaderDigits(row));
-  const horizontalHeader = new Array(
-    Math.max(...tileMap.map((row) => row.length)),
-  )
-    .fill(null)
-    .map((_, index) =>
-      getRowHeaderDigits(tileMap.map((row) => row[index] ?? false)),
-    );
+  const verticalHeader = useMemo(
+    () => tileMap.map((row) => getRowHeaderDigits(row)),
+    [tileMap],
+  );
+  const horizontalHeader = useMemo(
+    () =>
+      new Array(Math.max(...tileMap.map((row) => row.length)))
+        .fill(null)
+        .map((_, index) =>
+          getRowHeaderDigits(tileMap.map((row) => row[index] ?? false)),
+        ),
+    [tileMap],
+  );
 
   const maxVerticalHeaderDigits = Math.max(
     ...verticalHeader.map((row) => row.length),
@@ -165,6 +202,9 @@ export default function Nonogram({
     onRevealTile: revealTile,
   });
 
+  const horizontalSectionSize = getSectionSize(tilesInRow);
+  const verticalSectionSize = getSectionSize(tileMap.length);
+
   return (
     <View
       style={{
@@ -179,6 +219,7 @@ export default function Nonogram({
       >
         <Axis
           direction="vertical"
+          completedIndexes={completedRowIndexes}
           digitSize={HEADER_DIGIT_SIZE}
           tileGap={TILE_GAP}
           allDigits={verticalHeader}
@@ -187,6 +228,7 @@ export default function Nonogram({
         <View>
           <Axis
             direction="horizontal"
+            completedIndexes={completedColumnIndexes}
             digitSize={HEADER_DIGIT_SIZE}
             tileGap={TILE_GAP}
             allDigits={horizontalHeader}
@@ -196,9 +238,34 @@ export default function Nonogram({
             style={{
               padding: TILE_GAP,
               backgroundColor: "#f0f0f0",
+              overflow: "hidden",
             }}
             {...panResponder.panHandlers}
           >
+            {horizontalSectionSize > 0 &&
+              new Array(Math.round(tilesInRow / horizontalSectionSize) - 1)
+                .fill(null)
+                .map((_, index) => (
+                  <SectionLine
+                    key={`vertical-${index}`}
+                    direction="vertical"
+                    tileSize={tileSize}
+                    tileGap={TILE_GAP}
+                    index={(index + 1) * horizontalSectionSize}
+                  />
+                ))}
+            {verticalSectionSize > 0 &&
+              new Array(Math.round(tileMap.length / verticalSectionSize) - 1)
+                .fill(null)
+                .map((_, index) => (
+                  <SectionLine
+                    key={`horizontal-${index}`}
+                    direction="horizontal"
+                    tileSize={tileSize}
+                    tileGap={TILE_GAP}
+                    index={(index + 1) * verticalSectionSize}
+                  />
+                ))}
             <View
               style={{
                 gap: TILE_GAP,
