@@ -160,7 +160,12 @@ export default function GrandpaDialogue({
             colors={["#0000", "#0005"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
-            style={StyleSheet.absoluteFill}
+            style={[
+              StyleSheet.absoluteFill,
+              {
+                bottom: -24,
+              },
+            ]}
           />
           <Image
             source={require("@assets/images/grandpa.png")}

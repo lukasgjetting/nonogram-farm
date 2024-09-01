@@ -3,7 +3,10 @@ const fs = require("fs");
 const glob = require("glob");
 
 const nonogramFolder = path.join(__dirname, "../assets/nonograms");
-const outputFile = path.join(__dirname, "../constants/nonograms.generated.ts");
+const outputFile = path.join(
+  __dirname,
+  "../src/constants/nonograms.generated.ts",
+);
 
 const files = glob.sync(path.join(nonogramFolder, "**/*.txt")) as string[];
 

@@ -9,13 +9,14 @@ import {
 
 const SIZE = 125;
 
-type NonogramIconType = "default" | "sun" | "tree" | "seed";
+export type NonogramIconType = "default" | "sun" | "tree" | "building" | "seed";
 
 const ICON_MAP: Record<NonogramIconType, ImageSourcePropType> = {
   default: require("@/assets/images/nonogram-icons/default.png"),
   sun: require("@/assets/images/nonogram-icons/sun.png"),
   tree: require("@/assets/images/nonogram-icons/tree.png"),
-  seed: require("@/assets/images/nonogram-icons/default.png"),
+  building: require("@/assets/images/nonogram-icons/building.png"),
+  seed: require("@/assets/images/nonogram-icons/seed.png"),
 };
 
 type NonogramIconProps = {

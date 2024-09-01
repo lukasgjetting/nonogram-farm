@@ -4,7 +4,7 @@ import { windowSize } from "@/src/constants/windowSize";
 import { useSaveData } from "@/src/lib/save-data";
 import hasCompletedIntroStep from "@/src/utils/hasCompletedIntroStep";
 import SunIntroChapter from "@/src/components/intro/sun/SunIntroChapter";
-import BuildingsIntroChapter from "@/src/components/intro/house/BuildingsIntroChapter";
+import BuildingsIntroChapter from "@/src/components/intro/buildings/BuildingsIntroChapter";
 import House from "@/src/components/buildings/House";
 import HousePlants from "@/src/components/buildings/HousePlants";
 import FarmPlants from "@/src/components/buildings/FarmPlants";

@@ -1,4 +1,9 @@
 export const NonogramSources = {
+  "intro.tree": {
+    "name": "Tree",
+    "content": "ZZZZaaZZZZ\nZZZaaaaZZZ\nZZYaaaaaZZ\nZZababaaZZ\nZZZabaaZZZ\nZZZZbbZZZZ\nZaaZbbbaZZ\nZZabbbbZZZ\nZZZZXbZZbb\nWWWbbbbWWW",
+    "colors": {"a":"#65a30d","b":"#854d0e","X":"#d97706","Y":"#365314","Z":"#7dd3fc","W":"#86efac"}
+  },
   "intro.sun": {
     "name": "Sun",
     "content": "AaaA\naaba\nBaBa\nAbaA",
@@ -8,6 +13,11 @@ export const NonogramSources = {
     "name": "Demo",
     "content": "xxx",
     "colors": {"x":"#000"}
+  },
+  "intro.plant": {
+    "name": "Plant",
+    "content": "ZZZaZaaaaaaaZZZ\neeeeZZaaaaaZZee\neeeeeeZaaaeeeee\neebbbeZZZZeeeee\nZeebbbZaZZbbeeZ\nZZZZbbZZbbZZZZZ\nZbbbZbYbYbZZZZZ\nZZZZZZbbbZZZZZZ\nZbbZZZbbZZZZZZZ\nZZbbbZbbZZZZZZZ\nZZZZcbbbccZZZZZ\nZZZZccccccddZZZ\ndddcddccdccdddd\nddddXddXdddddXX",
+    "colors": {"a":"#f3e100","b":"#053408","c":"#693c0d","d":"#23a518","e":"#ffffff","Z":"#4ce6ff","Y":"#19c04b","X":"#0d6527"}
   },
   "intro.house": {
     "name": "House",

@@ -141,7 +141,7 @@ export default function NonogramScreen() {
       {!hasCompletedTutorial && (
         <GrandpaDialogue
           delay={1000}
-          text={`Oh I love these! It's called a nonogram, and they're tons of fun!\n\nEach digit represents how many squares in that row or column must be filled in. If a single row or column has multiple digits, it means that the squares must be filled in that pattern, with at least one empty square between each group of filled squares.\n\nGood luck!`}
+          text={`Oh I love these! It's called a nonogram, and they're tons of fun!\n\nEach digit represents how many squares in that row or column must be filled in. If a single row or column has multiple digits, it means that the squares must be filled in that pattern, with at least one empty square between each group of filled squares.\n\nGood luck!\n\nOh, and don't forget that you earn rewards for every nonogram you complete!`}
           onComplete={() => setSaveData("hasCompletedNonogramTutorial", true)}
         />
       )}
