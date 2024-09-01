@@ -27,6 +27,7 @@ export default function ColoredMotive({
   }, [animatedValue]);
 
   const colorMap = getNonogramColorMap(nonogramKey);
+
   return (
     <Animated.View style={{ opacity: animatedValue }}>
       {colorMap.map((row, rowIndex) => (
@@ -36,8 +37,8 @@ export default function ColoredMotive({
               key={colIndex}
               style={{
                 backgroundColor: color,
-                width: tileSize + tileGap,
-                height: tileSize + tileGap,
+                width: Math.ceil(tileSize) + tileGap,
+                height: Math.ceil(tileSize) + tileGap,
               }}
             />
           ))}

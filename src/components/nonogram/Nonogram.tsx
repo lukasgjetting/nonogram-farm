@@ -266,12 +266,7 @@ export default function Nonogram({
                     index={(index + 1) * verticalSectionSize}
                   />
                 ))}
-            <View
-              style={{
-                gap: TILE_GAP,
-              }}
-              pointerEvents="none"
-            >
+            <View style={{ gap: TILE_GAP }} pointerEvents="none">
               {tileMap?.map((row, rowIndex) => (
                 <View
                   key={rowIndex}
