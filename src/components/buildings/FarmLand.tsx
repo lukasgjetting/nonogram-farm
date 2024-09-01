@@ -20,6 +20,7 @@ import {
 import getSeedStage from "@/src/utils/getSeedStage";
 import useHarvest from "@/src/utils/useHarvest";
 import useSeedGrowthUpdate from "@/src/utils/useSeedGrowthUpdate";
+import formatTimeLabel from "@/src/utils/formatTimeLabel";
 
 const ASPECT_RATIO = 1.221;
 const WIDTH = 85;
@@ -148,17 +149,10 @@ export default function FarmLand(props: BuildingProps) {
       case 1:
       case 2: {
         const growingMilliseconds = Date.now() - plantedSeed!.plantedAt;
-        const remainingSeconds =
-          (SEED_GROWTH_TIME[plantedSeed!.type]! - growingMilliseconds) / 1000;
-
-        const timeText =
-          remainingSeconds >= 60
-            ? `approximately ${Math.round(remainingSeconds / 60)} minutes`
-            : `${Math.round(remainingSeconds)} seconds`;
 
         Alert.alert(
           "Your seed is still growing",
-          `It will be ready in ${timeText}.`,
+          `It will be ready in ${formatTimeLabel(SEED_GROWTH_TIME[plantedSeed!.type]! - growingMilliseconds)}.`,
         );
         break;
       }

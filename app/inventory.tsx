@@ -4,12 +4,18 @@ import Header from "@/src/components/store/Header";
 import ItemSlots, { Item } from "@/src/components/store/ItemSlots";
 import Text from "@/src/components/Text";
 import { NonogramKey } from "@/src/constants/nonograms.generated";
-import { SEED_BAG_IMAGES, SeedType } from "@/src/constants/seeds";
+import {
+  SEED_BAG_IMAGES,
+  SEED_GROWTH_TIME,
+  SEED_LABELS,
+  SeedType,
+} from "@/src/constants/seeds";
 import { useNonogramCompletionListener } from "@/src/lib/nonogram-completion";
 import { useSaveData } from "@/src/lib/save-data";
 import navigateToNonogramScreen from "@/src/utils/navigateToNonogramScreen";
 import { useState } from "react";
-import { ImageBackground, StatusBar, View } from "react-native";
+import { Alert, ImageBackground, StatusBar, View } from "react-native";
+import formatTimeLabel from "@/src/utils/formatTimeLabel";
 
 const ELIGIBLE_SEED_NONOGRAMS = [
   "intro.house",
@@ -94,6 +100,12 @@ export default function InventoryScreen() {
             onPress={(item) => {
               if (item.id === "nonograms") {
                 onPressNonogram();
+              } else {
+                const seedType = item.id as SeedType;
+                Alert.alert(
+                  `${SEED_LABELS[seedType]} seed`,
+                  `Takes ${formatTimeLabel(SEED_GROWTH_TIME[seedType])} to grow`,
+                );
               }
             }}
             renderExtra={(item) => (

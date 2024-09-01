@@ -8,6 +8,8 @@ export type IntroStep = (typeof INTRO_STEPS)[number];
 
 export type SaveData = {
   hasCompletedNonogramTutorial: boolean;
+  hasCompletedInventoryTutorial: boolean;
+  hasCompletedShopTutorial: boolean;
   introNextStep: IntroStep | null;
   seeds: Partial<Record<SeedType, number>>;
   points: number;
@@ -19,6 +21,8 @@ export type SaveData = {
 const initialData: SaveData = {
   introNextStep: "sun",
   hasCompletedNonogramTutorial: false,
+  hasCompletedInventoryTutorial: false,
+  hasCompletedShopTutorial: false,
   seeds: { lettuce: 1 },
   points: 0,
   coins: 0,

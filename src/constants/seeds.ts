@@ -22,6 +22,13 @@ export type PlantedSeed = {
   plantedAt: number;
 };
 
+export const SEED_LABELS: Record<SeedType, string> = {
+  lettuce: "Lettuce",
+  carrot: "Carrot",
+  tomato: "Tomato",
+  pineapple: "Pineapple",
+};
+
 export const SEED_STAGE_IMAGES: Record<
   SeedType,
   [SeedStageImage, SeedStageImage, SeedStageImage, SeedStageImage]
