@@ -5,7 +5,7 @@ import getSeedStage from "./getSeedStage";
 const GROWTH_TIME_TO_POINTS_FACTOR = 0.007;
 const POINTS_VARIATION = 0.2;
 
-const GROWTH_TIME_TO_COINS_FACTOR = 0.001;
+const GROWTH_TIME_TO_COINS_FACTOR = 0.0025;
 
 const useHarvest = () => {
   const [{ plantedSeed, points, coins }, updateSaveData] = useSaveData();

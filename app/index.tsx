@@ -53,7 +53,6 @@ export default function HomeScreen() {
             {
               width: "100%",
               height: "100%",
-              backgroundColor: "red",
               resizeMode: "stretch",
             },
           ]}
@@ -71,31 +70,31 @@ export default function HomeScreen() {
           isVisible={hasCompletedHouse}
           x={dx(45)}
           y={dy(20)}
-          dropDelay={2000}
+          dropDelay={1000}
         />
         <HousePlants
           isVisible={hasCompletedPlants}
           x={dx(62.8)}
           y={dy(25.75)}
-          dropDelay={2000}
+          dropDelay={1000}
         />
         <FarmPlants
           isVisible={hasCompletedPlants}
           x={-dx(10) - dy(6)}
           y={dy(54.5) - dx(25)}
-          dropDelay={2250}
+          dropDelay={1250}
         />
         <FarmFence
           isVisible={hasCompletedFarm}
           x={dx(4.65)}
           y={dy(65) - dx(11)}
-          dropDelay={2000}
+          dropDelay={1000}
         />
         <FarmLand
           isVisible={hasCompletedFarm}
           x={dx(1) + dy(2.8)}
           y={dy(66.5)}
-          dropDelay={2250}
+          dropDelay={1250}
         />
         {introChapter ?? <BottomMenu />}
       </View>

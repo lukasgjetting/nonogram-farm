@@ -28,8 +28,9 @@ export default function GameModal({
           style={{
             backgroundColor: "white",
             width: windowSize.width - 80,
-            padding: 12,
+            padding: 24,
             borderRadius: 10,
+            maxWidth: 450,
           }}
         >
           {children}

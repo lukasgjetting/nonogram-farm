@@ -62,7 +62,9 @@ export default function GrandpaDialogue({
     }).start(() => {
       if (isFinished) {
         setDidCompleteFinishAnimation(true);
-        onComplete?.();
+        setTimeout(() => {
+          onComplete?.();
+        }, 50);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

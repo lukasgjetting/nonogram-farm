@@ -39,13 +39,11 @@ export default function SunIntroChapter({ onComplete }: SunIntroChapterProps) {
   const [isNonogramComplete, setIsNonogramComplete] = useState(false);
 
   useNonogramCompletionListener("intro.sun", () => {
-    setTimeout(() => {
-      setIsNonogramComplete(true);
-    }, 2000);
+    setIsNonogramComplete(true);
 
     setTimeout(() => {
       onComplete();
-    }, 2000);
+    }, 4500);
   });
 
   return (
@@ -56,7 +54,7 @@ export default function SunIntroChapter({ onComplete }: SunIntroChapterProps) {
         delay={1000}
         text={`Hi! Welcome to your brand new farm!\n\nMy name is Otto and I am your new neighbour. I was planning to invite you for a cup of coffee in the sun, but it seems we missed the last sunlight.\n\nIf only there was a way to get it back...`}
       />
-      {finishedGrandpaIntro && (
+      {finishedGrandpaIntro && !isNonogramComplete && (
         <View
           style={[
             StyleSheet.absoluteFill,

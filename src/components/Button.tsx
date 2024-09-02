@@ -24,11 +24,9 @@ const sizeToStyle: Record<
 > = {
   primary: {
     container: {
-      backgroundColor: "#06b6d4",
+      backgroundColor: "#c9e1fd",
     },
-    text: {
-      color: "white",
-    },
+    text: {},
   },
   default: {
     container: {

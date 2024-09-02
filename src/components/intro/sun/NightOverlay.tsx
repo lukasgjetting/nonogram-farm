@@ -12,6 +12,7 @@ export default function NightOverlay({ isVisible }: NightOverlayProps) {
     Animated.timing(animatedValue, {
       toValue: isVisible ? 1 : 0,
       duration: 3000,
+      delay: 1000,
       useNativeDriver: true,
     }).start();
   }, [animatedValue, isVisible]);

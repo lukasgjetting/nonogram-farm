@@ -57,14 +57,17 @@ export default function ShopScreen() {
           source={require("@assets/images/shop-header.png")}
           style={{
             position: "absolute",
+            zIndex: 2,
             left: -(HEADER_WIDTH - windowSize.width) / 2,
-            top: -HEADER_HEIGHT / 2.5,
+            top: -HEADER_HEIGHT / 2.25,
             width: HEADER_WIDTH,
             height: HEADER_HEIGHT,
             resizeMode: "contain",
           }}
         />
-        <Header>SHOP</Header>
+        <View style={{ zIndex: 5 }}>
+          <Header>SHOP</Header>
+        </View>
         <View style={{ flex: 1, alignSelf: "stretch" }}>
           <ItemSlots
             items={SHOP_ITEMS.map((i) => ({
