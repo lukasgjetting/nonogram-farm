@@ -12,6 +12,7 @@ const COMPLETED_ANIMATION_DELAY = 100;
 
 export type TileProps = {
   size: number;
+  tileGap: number;
   state: "empty" | "filled" | "crossed";
   rowIndex: number;
   columnIndex: number;
@@ -21,6 +22,7 @@ export type TileProps = {
 
 export default memo(function Tile({
   size,
+  tileGap,
   state,
   rowIndex,
   columnIndex,
@@ -197,7 +199,7 @@ export default memo(function Tile({
               {
                 scale: fillAnimatedValue.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [0, 1.1],
+                  outputRange: [0, (size + tileGap) / size],
                 }),
               },
             ],

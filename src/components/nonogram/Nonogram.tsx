@@ -14,7 +14,13 @@ import ColoredMotive from "./ColoredMotive";
 import CompletedName from "./CompletedName";
 import SectionLine from "./SectionLine";
 
-export const DEFAULT_NONOGRAM_MARGIN = 16;
+const MAX_NONOGRAM_SIZE = 700;
+const MIN_MONOGRAM_MARGIN = 16;
+export const DEFAULT_NONOGRAM_MARGIN = Math.max(
+  MIN_MONOGRAM_MARGIN,
+  (windowSize.width - MAX_NONOGRAM_SIZE) / 2,
+);
+
 export const FULLSCREEN_NONOGRAM_SIZE =
   windowSize.width - DEFAULT_NONOGRAM_MARGIN * 2;
 
@@ -280,6 +286,7 @@ export default function Nonogram({
                         <Tile
                           key={columnIndex}
                           size={tileSize}
+                          tileGap={TILE_GAP}
                           rowIndex={rowIndex}
                           columnIndex={columnIndex}
                           isRowCompleted={rowsCompleted[rowIndex] ?? false}
