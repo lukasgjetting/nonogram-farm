@@ -14,7 +14,8 @@
     },
     "ios": {
       "bundleIdentifier": "com.lukasgjetting.nonogramfarm",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "requireFullScreen": true
     },
     "android": {
       "adaptiveIcon": {
@@ -42,6 +43,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "2f07b181-c979-4960-9883-11808d4572d5"
+      }
     }
   }
 }
