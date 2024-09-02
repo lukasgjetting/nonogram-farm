@@ -35,7 +35,6 @@ export default function Health({ currentHealth, maxHealth }: HealthProps) {
     latestHealthRef.current = currentHealth;
 
     if (lostHealth < 0) {
-      console.log({ lostHealth, currentHealth });
       heartAnimatedValuesRefs.forEach((value, index) => {
         if (index <= currentHealth - 1) {
           value.setValue(1);

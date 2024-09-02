@@ -16,13 +16,6 @@ const useSeedGrowthUpdate = (seed: PlantedSeed | null) => {
     const timePerStage = SEED_GROWTH_TIME[seed.type] / 3;
     const currentTime = (Date.now() - seed.plantedAt) % timePerStage;
 
-    console.log({
-      currentGrowthStage,
-      currentTime,
-      timePerStage,
-      timeout: Math.max(5, timePerStage - currentTime + 1000),
-    });
-
     const timeoutId = setTimeout(
       () => {
         setRandomState(Math.random());

@@ -31,10 +31,6 @@ export default function AxisLine({
     }).start();
   }, [isCompleted, completedAnimatedValue]);
 
-  if (isCompleted) {
-    console.log(digits);
-  }
-
   return (
     <Animated.View
       style={[
