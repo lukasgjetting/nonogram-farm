@@ -1,6 +1,6 @@
-import { ImageBackground, StatusBar, View } from "react-native";
+import { Image, StatusBar, StyleSheet, View } from "react-native";
 import ScrollingBackgroundImage from "@/src/components/ScrollingBackgroundImage";
-import { windowSize } from "@/src/constants/windowSize";
+import { dx, dy, windowSize } from "@/src/constants/windowSize";
 import { useSaveData } from "@/src/lib/save-data";
 import hasCompletedIntroStep from "@/src/utils/hasCompletedIntroStep";
 import SunIntroChapter from "@/src/components/intro/sun/SunIntroChapter";
@@ -44,13 +44,21 @@ export default function HomeScreen() {
     }
   })();
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "blue" }}>
       <StatusBar barStyle={"dark-content"} />
-      <ImageBackground
-        style={{ flex: 1, justifyContent: "center" }}
-        imageStyle={{ resizeMode: "cover" }}
-        source={require("@assets/images/farm-background.png")}
-      >
+      <View style={{ flex: 1 }}>
+        <Image
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              width: "100%",
+              height: "100%",
+              backgroundColor: "red",
+              resizeMode: "stretch",
+            },
+          ]}
+          source={require("@assets/images/farm-background.png")}
+        />
         <View style={{ flex: 1 }}>
           <ScrollingBackgroundImage
             source={require("@/assets/images/clouds-small.png")}
@@ -59,33 +67,38 @@ export default function HomeScreen() {
             height={windowSize.height * 0.1}
           />
         </View>
-        <House isVisible={hasCompletedHouse} x={180} y={200} dropDelay={2000} />
+        <House
+          isVisible={hasCompletedHouse}
+          x={dx(45)}
+          y={dy(20)}
+          dropDelay={2000}
+        />
         <HousePlants
           isVisible={hasCompletedPlants}
-          x={270}
-          y={240}
+          x={dx(62.8)}
+          y={dy(25.75)}
           dropDelay={2000}
         />
         <FarmPlants
           isVisible={hasCompletedPlants}
-          x={-100}
-          y={400}
+          x={-dx(10) - dy(6)}
+          y={dy(54.5) - dx(25)}
           dropDelay={2250}
         />
         <FarmFence
           isVisible={hasCompletedFarm}
-          x={20}
-          y={555}
+          x={dx(4.65)}
+          y={dy(65) - dx(11)}
           dropDelay={2000}
         />
         <FarmLand
           isVisible={hasCompletedFarm}
-          x={35}
-          y={620}
+          x={dx(1) + dy(2.8)}
+          y={dy(66.5)}
           dropDelay={2250}
         />
         {introChapter ?? <BottomMenu />}
-      </ImageBackground>
+      </View>
     </View>
   );
 }

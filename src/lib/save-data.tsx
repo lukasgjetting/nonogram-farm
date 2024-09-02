@@ -23,7 +23,7 @@ const initialData: SaveData = {
   hasCompletedNonogramTutorial: false,
   hasCompletedInventoryTutorial: false,
   hasCompletedShopTutorial: false,
-  seeds: { lettuce: 1 },
+  seeds: { lettuce: 10 },
   points: 0,
   coins: 0,
   plantedSeed: null,

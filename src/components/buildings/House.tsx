@@ -1,3 +1,4 @@
+import { dx } from "@/src/constants/windowSize";
 import Building, { BuildingProps } from "./Building";
 
 export default function House(props: BuildingProps) {
@@ -5,7 +6,7 @@ export default function House(props: BuildingProps) {
     <Building
       {...props}
       source={require("@assets/images/buildings/house.png")}
-      width={230}
+      width={dx(53)}
       aspectRatio={1.221}
     />
   );

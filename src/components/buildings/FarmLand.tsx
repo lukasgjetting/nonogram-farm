@@ -21,9 +21,10 @@ import getSeedStage from "@/src/utils/getSeedStage";
 import useHarvest from "@/src/utils/useHarvest";
 import useSeedGrowthUpdate from "@/src/utils/useSeedGrowthUpdate";
 import formatTimeLabel from "@/src/utils/formatTimeLabel";
+import { dx } from "@/src/constants/windowSize";
 
 const ASPECT_RATIO = 1.221;
-const WIDTH = 85;
+const WIDTH = dx(19.7674);
 const HEIGHT = WIDTH / ASPECT_RATIO;
 
 const FARM_LANDS_HORIZONTAL = 3;

@@ -1,3 +1,4 @@
+import { dx, dy } from "@/src/constants/windowSize";
 import Building, { BuildingProps } from "./Building";
 
 export default function FarmPlants(props: BuildingProps) {
@@ -5,7 +6,7 @@ export default function FarmPlants(props: BuildingProps) {
     <Building
       {...props}
       source={require("@assets/images/buildings/farm-plants.png")}
-      width={310}
+      width={dx(40) + dy(15)}
       aspectRatio={1.272}
     />
   );

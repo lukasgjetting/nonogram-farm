@@ -125,8 +125,7 @@ export default function GrandpaDialogue({
   }, [isReady, currentSectionIndex, currentSection.length]);
 
   const totalOffset =
-    TEXT_BOX_HEIGHT +
-    2 * TEXT_BOX_PADDING +
+    Math.max(TEXT_BOX_HEIGHT + 2 * TEXT_BOX_PADDING, GRANDPA_HEIGHT) +
     2 * MARGIN_VERTICAL +
     insets.bottom;
 
