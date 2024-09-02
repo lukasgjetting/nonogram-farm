@@ -1,0 +1,16 @@
+<Carrot>
+A=#FFD1F2
+a=#FFAE36
+b=#FB9600
+c=#C17400
+d=#85C959
+e=#4B8C1D
+f=#376816
+AAAAdedA
+AAAaefed
+AAabcfed
+AAabcAfe
+AabcAAfe
+AabcAAfe
+abcAAAfA
+bcAAAAAA

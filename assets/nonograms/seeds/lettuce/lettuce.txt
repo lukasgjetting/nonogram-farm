@@ -1,0 +1,14 @@
+<Lettuce>
+A=#DDA7FF
+a=#739B55
+b=#93C36E
+c=#B5F881
+d=#D0FBAF
+AAAaaaAA
+AAabbbaA
+AabcBcba
+AaccBcba
+AccBccba
+ddBccaaA
+dBddaAAA
+dddAAAAA

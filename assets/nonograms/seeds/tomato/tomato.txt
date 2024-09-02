@@ -1,0 +1,17 @@
+<Tomato>
+A=#FEFFCE
+B=#B2322D
+a=#5A8D36
+b=#336311
+c=#E4433D
+d=#284811
+e=#FBB1A1
+f=#83221E
+AAAAAaaA
+AAAaabAA
+AcabadbA
+ceaBBdbf
+ceBBBBBf
+ccBBBBBf
+ccBBBBff
+AccBBBfA

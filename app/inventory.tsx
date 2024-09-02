@@ -18,18 +18,35 @@ import formatTimeLabel from "@/src/utils/formatTimeLabel";
 import QuantityIndicator from "@/src/components/QuantityIndicator";
 
 const ELIGIBLE_SEED_NONOGRAMS = [
-  //"intro.house",
-  //"intro.sun",
-  //"intro.simple",
-  "seeds.pina-colada",
-  "seeds.pineapple-slice",
+  "seeds.pineapple.pineapple",
+  "seeds.pineapple.pineapple-slice",
+  "seeds.pineapple.pina-colada",
+  "seeds.tomato.tomato",
+  "seeds.tomato.tomato-slice",
+  "seeds.tomato.caprese",
+  "seeds.carrot.carrot",
+  "seeds.carrot.bunny",
+  "seeds.carrot.carrot-field",
+  "seeds.lettuce.lettuce",
+  "seeds.lettuce.garden",
+  "seeds.lettuce.cheeseburger",
 ] satisfies NonogramKey[];
 
 type EligibleSeedNonogramKey = (typeof ELIGIBLE_SEED_NONOGRAMS)[number];
 
 const SEED_BY_NONOGRAM_KEY: Record<EligibleSeedNonogramKey, SeedType> = {
-  "seeds.pina-colada": "pineapple",
-  "seeds.pineapple-slice": "pineapple",
+  "seeds.pineapple.pineapple": "pineapple",
+  "seeds.pineapple.pineapple-slice": "pineapple",
+  "seeds.pineapple.pina-colada": "pineapple",
+  "seeds.tomato.tomato": "tomato",
+  "seeds.tomato.tomato-slice": "tomato",
+  "seeds.tomato.caprese": "tomato",
+  "seeds.carrot.carrot": "carrot",
+  "seeds.carrot.bunny": "carrot",
+  "seeds.carrot.carrot-field": "carrot",
+  "seeds.lettuce.lettuce": "lettuce",
+  "seeds.lettuce.garden": "lettuce",
+  "seeds.lettuce.cheeseburger": "lettuce",
 };
 
 export default function InventoryScreen() {

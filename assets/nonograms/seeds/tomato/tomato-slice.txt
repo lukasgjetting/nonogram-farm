@@ -1,0 +1,17 @@
+<Tomato Slice>
+A=#85B291
+B=#83221E
+C=#FBB1A1
+a=#B2322D
+b=#E4433D
+c=#FFC3B6
+AAaaaaaaAA
+AabbbbbbaA
+abBBBbBBba
+abBCCbcBba
+abbbbbcBba
+abBcbbbbba
+abBcbCCBba
+abBBbBBBba
+AabbbbbbaA
+AAaaaaaaAA

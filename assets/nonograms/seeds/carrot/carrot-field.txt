@@ -1,0 +1,22 @@
+<Carrot Field>
+A=#FFAE36
+B=#FB9600
+C=#C17400
+D=#85C959
+E=#4B8C1D
+F=#4B8C1D
+G=#FAFDFF
+a=#FFF59A
+b=#E4F4FF
+c=#9F7E60
+d=#7F5D3D
+bbbaaGGGbb
+GGbbbbbbbG
+GGGGbbbGGG
+FbbFbbFbFb
+CcdCccCdCc
+cdcccEcccd
+cdEccBcccE
+cdBccdcccB
+DdccDdcDcd
+AdccAdcAcd
