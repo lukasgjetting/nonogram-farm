@@ -61,8 +61,8 @@ export const NonogramSources = {
   },
   "intro.trees": {
     "name": "Trees",
-    "content": "AAAababbcc\nAAababbbbc\nAAabbabdbc\nAAAaaeadce\nAffaaeadae\nfghiaeadae\nBBBBBBBkkk\nBBBBBkkkkl\nBBkkkkllll",
-    "colors": {"a":"#AED293","b":"#8AAC71","c":"#6C9351","d":"#7F5D3D","e":"#62462C","f":"#395637","g":"#2C432A","h":"#DAC3FF","i":"#588054","j":"#4A6C47","k":"#BDF3A3","l":"#AADB93","A":"#BCEBFF","B":"#DFFFD0"}
+    "content": "AAAababbcc\nAAababbbbc\nAAabbabdbc\nAAAaaeadce\nAffAAeAdAe\nfghiAeAdAe\nfgijieAdAe\nBBBCCCCkkk\nCCCCCkkkkl\nCCkkkkllll",
+    "colors": {"a":"#AED293","b":"#8AAC71","c":"#6C9351","d":"#7F5D3D","e":"#62462C","f":"#395637","g":"#2C432A","h":"#DAC3FF","i":"#588054","j":"#4A6C47","k":"#BDF3A3","l":"#AADB93","A":"#BCEBFF","B":"#DFFFD0","C":"#D2FDBE"}
   },
   "intro.sun": {
     "name": "Sun",
@@ -76,12 +76,12 @@ export const NonogramSources = {
   },
   "intro.house": {
     "name": "House",
-    "content": "ZZZbcZZZ\nZZabcdZZ\nZaabcddZ\naabbccdd\nZeefghiZ\nZeafghiZ\nZebffiiZ\njjkkklll",
-    "colors": {"a":"#DF4848","b":"#C73A3A","c":"#A63636","d":"#7B2828","e":"#E4C8A7","f":"#CAAE8E","g":"#E7FFFE","h":"#D6F4F3","i":"#AB9070","j":"#DFFFD0","k":"#BDF3A3","l":"#AADB93","Z":"#BCEBFF"}
+    "content": "ZZZbcZZZ\nZZabcdZZ\nZaabcddZ\naabbccdd\nZeefGHiZ\nZeAfGHiZ\nZeBffiiZ\njjkkklll",
+    "colors": {"a":"#DF4848","b":"#C73A3A","c":"#A63636","d":"#7B2828","e":"#E4C8A7","f":"#CAAE8E","i":"#AB9070","j":"#DFFFD0","k":"#BDF3A3","l":"#AADB93","A":"#DF4848","B":"#C73A3A","G":"#E7FFFE","H":"#D6F4F3","Z":"#BCEBFF"}
   },
   "intro.farm": {
     "name": "Farm",
-    "content": "aaaaaaaaaaaa\naaaaaaaaaaaa\nABBABBABBABB\nAaaAaaAaaAaa\nCCDCCDCCDCCD\nbccbccbccbcc\nEdFEdFEFdEFd\nEddEddEddEdd\nbccbccbccbcc\nEFdEFdEdFEdF\nEddEddEddEdd\nbccbccbccbcc",
+    "content": "aaaaaaaaaaaa\nAaaAaaAaaAaa\nABBABBABBABB\nAaaAaaAaaAaa\nCCDCCDCCDCCD\nbccbccbccbcc\nEdFEFdEddEFd\nEddEddEFdEdd\nbccbccbccbcc\nEFdEdFEddEdF\nEddEddEdFEdd\nbccbccbccbcc",
     "colors": {"a":"#BCEBFF","b":"#BF956E","c":"#62462C","d":"#9F7E60","A":"#5F4025","B":"#3C2817","C":"#AED293","D":"#8AAC71","E":"#7F5D3D","F":"#5E8C3E"}
   }
 } as const;

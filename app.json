@@ -2,7 +2,7 @@
   "expo": {
     "name": "Nonogram Farm",
     "slug": "nonogram-farm",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon.png",
     "scheme": "myapp",
@@ -13,6 +13,7 @@
       "backgroundColor": "#c1f09d"
     },
     "ios": {
+      "buildNumber": "3",
       "bundleIdentifier": "com.lukasgjetting.nonogramfarm",
       "supportsTablet": true,
       "requireFullScreen": true

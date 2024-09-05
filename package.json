@@ -1,7 +1,7 @@
 {
   "name": "nonogram-farm",
   "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "1",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -12,7 +12,8 @@
     "lint": "expo lint",
     "lint:fix": "eslint . --fix",
     "nonogram-codegen": "ts-node ./scripts/generateNonogramType.ts",
-    "nonogram-codegen:watch": "nodemon --watch assets/nonograms -e txt --exec \"ts-node ./scripts/generateNonogramType.ts\""
+    "nonogram-codegen:watch": "nodemon --watch assets/nonograms -e txt --exec \"ts-node ./scripts/generateNonogramType.ts\"",
+    "build:ios:release": "eas build --platform ios --profile production --auto-submit"
   },
   "jest": {
     "preset": "jest-expo"
