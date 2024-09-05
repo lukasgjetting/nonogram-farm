@@ -1,7 +1,8 @@
+import Colors from "@/src/constants/colors";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 
-export const FILLED_COLOR = "#082f49";
+const FILLED_COLOR = Colors.DARK;
 const FILLED_COLOR_BORDER = "#041b29";
 const EMPTY_COLOR = "white";
 const CROSS_COLOR = "#0f172a";

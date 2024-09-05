@@ -1,7 +1,8 @@
+import Colors from "@/src/constants/colors";
 import { useEffect } from "react";
 import { Animated, Text, useAnimatedValue } from "react-native";
 
-export const AXIS_LINE_BACKGROUND_COLOR = "#0ea5e933";
+export const AXIS_LINE_BACKGROUND_COLOR = Colors.ACCENT_TRANSPARENT;
 const COMPLETED_BACKGROUND_COLOR = "#cccccc33";
 
 type AxisLineProps = {

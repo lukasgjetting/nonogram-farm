@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { Animated, PanResponder, useAnimatedValue } from "react-native";
 import { MAX_ZOOM } from "./useZoom";
 
-const MAX_PAN = ((MAX_ZOOM - 1) * windowSize.width) / 3.5;
+const MAX_PAN = ((MAX_ZOOM - 1) * windowSize.width) / 2;
 
 const getPanValue = (value: number) => {
   if (value > MAX_PAN) {
@@ -16,6 +16,8 @@ const getPanValue = (value: number) => {
 
   return value;
 };
+
+const PAN_SCALE = 0.5;
 
 const useNonogramPanResponder = (opts: {
   tileSize: number;
@@ -43,14 +45,6 @@ const useNonogramPanResponder = (opts: {
   onRevealRef.current = opts.onRevealTile;
 
   useEffect(() => {
-    console.log("setting listener");
-    panXAnimatedValue.addListener(({ value }) => {
-      console.log("panXAnimatedValue", value);
-    });
-    panYAnimatedValue.addListener(({ value }) => {
-      //console.log("panYAnimatedValue", value);
-    });
-
     if (!opts.isZoomed) {
       Animated.spring(panXAnimatedValue, {
         toValue: 0,
@@ -105,10 +99,6 @@ const useNonogramPanResponder = (opts: {
       onStartShouldSetPanResponderCapture: (e, gestureState) => {
         isPanCancelledRef.current = false;
 
-        console.log("set capture", {
-          zoomed: isZoomedRef.current,
-          panningZoom: isPanningZoomRef.current,
-        });
         if (!isZoomedRef.current) {
           handleTouch(e.nativeEvent.locationX, e.nativeEvent.locationY);
         }
@@ -123,21 +113,12 @@ const useNonogramPanResponder = (opts: {
       onPanResponderMove: (e, gestureState) => {
         isPanningZoomRef.current = true;
 
-        console.log("move", {
-          zoomed: isZoomedRef.current,
-          panningZoom: isPanningZoomRef.current,
-        });
-
         if (isZoomedRef.current && isPanningZoomRef.current) {
           panXAnimatedValue.setValue(
-            getPanValue(panXRef.current + gestureState.dx),
+            getPanValue(panXRef.current + gestureState.dx) * PAN_SCALE,
           );
-          console.log("panXAnimatedValue", {
-            raw: panXRef.current + gestureState.dx,
-            after: getPanValue(panXRef.current + gestureState.dx),
-          });
           panYAnimatedValue.setValue(
-            getPanValue(panYRef.current + gestureState.dy),
+            getPanValue(panYRef.current + gestureState.dy) * PAN_SCALE,
           );
         } else {
           handleTouch(e.nativeEvent.locationX, e.nativeEvent.locationY);

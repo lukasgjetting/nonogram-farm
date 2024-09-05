@@ -6,8 +6,7 @@ import {
   useAnimatedValue,
   View,
 } from "react-native";
-import { FILLED_COLOR } from "./Tile";
-import { AXIS_LINE_BACKGROUND_COLOR } from "./AxisLine";
+import Colors from "@/src/constants/colors";
 
 const CIRCLE_SIZE = 56;
 const CIRCLE_PADDING = 4;
@@ -17,8 +16,8 @@ const CIRCLE_COLOR = "#FFF";
 const FILLED_BOX_SIZE = CIRCLE_SIZE * 0.4;
 const CROSS_SIZE = CIRCLE_SIZE * 0.35;
 
-const ACTIVE_COLOR = FILLED_COLOR;
-const INACTIVE_COLOR = `${FILLED_COLOR}BB`;
+const ACTIVE_COLOR = Colors.DARK;
+const INACTIVE_COLOR = `${Colors.DARK}BB`;
 
 type PutCrossesToggleProps = {
   value: boolean;
@@ -43,7 +42,7 @@ export default function PutCrossesToggle({
     <TouchableWithoutFeedback onPress={() => onChange(!value)}>
       <View
         style={{
-          backgroundColor: AXIS_LINE_BACKGROUND_COLOR,
+          backgroundColor: Colors.ACCENT_TRANSPARENT,
           padding: CIRCLE_PADDING,
           borderRadius: CIRCLE_SIZE + CIRCLE_PADDING,
           width: 2 * (CIRCLE_SIZE + CIRCLE_PADDING) + CIRCLE_GAP,

@@ -19,6 +19,9 @@ export default function Controls({
     <View
       style={{
         alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "row",
+        gap: 16,
       }}
     >
       <PutCrossesToggle
