@@ -53,8 +53,6 @@ export default memo(function Tile({
     const isFilledError = isPuttingCrosses && state === "filled";
     const isCrossedError = !isPuttingCrosses && state === "crossed";
 
-    console.log({ isPuttingCrosses, isFilledError, isCrossedError });
-
     Animated.timing(fillAnimatedValue, {
       toValue: state === "filled" ? 1 : 0,
       duration: FILLED_ANIMATION_DURATION,

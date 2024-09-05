@@ -3,7 +3,7 @@ import {
   NonogramKey,
 } from "@/src/constants/nonograms.generated";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import Tile from "./Tile";
 import getRowHeaderDigits from "./utils/getRowHeaderDigits";
@@ -13,8 +13,9 @@ import Axis from "./Axis";
 import ColoredMotive from "./ColoredMotive";
 import CompletedName from "./CompletedName";
 import SectionLine from "./SectionLine";
-import PutCrossesToggle from "./PutCrossesToggle";
 import Health from "./Health";
+import Controls from "./Controls";
+import useZoom from "./utils/useZoom";
 
 const MAX_NONOGRAM_SIZE = 700;
 const MIN_MONOGRAM_MARGIN = 32;
@@ -66,6 +67,8 @@ export default function Nonogram({
   currentHealth,
 }: NonogramProps) {
   const [isPuttingCrosses, setIsPuttingCrosses] = useState(false);
+  const { isZoomed, setIsZoomed, zoomScaleAnimatedValue } = useZoom();
+
   const [revealedTiles, setRevealedTiles] = useState<TileMap>([]);
   const [tileMap, setTileMap] = useState<TileMap>(() =>
     getNonogramTileMap(srcKey),
@@ -221,11 +224,13 @@ export default function Nonogram({
       (tilesInRow + 1) * TILE_GAP) /
     tilesInRow;
 
-  const panResponder = useNonogramPanResponder({
-    tileSize,
-    tileGap: TILE_GAP,
-    onRevealTile: revealTile,
-  });
+  const { panResponder, panXAnimatedValue, panYAnimatedValue } =
+    useNonogramPanResponder({
+      tileSize,
+      tileGap: TILE_GAP,
+      onRevealTile: revealTile,
+      isZoomed,
+    });
 
   const horizontalSectionSize = getSectionSize(tilesInRow);
   const verticalSectionSize = getSectionSize(tileMap.length);
@@ -236,132 +241,142 @@ export default function Nonogram({
         <Health maxHealth={maxHealth} currentHealth={currentHealth} />
       </View>
       <View style={{ height: DEFAULT_NONOGRAM_MARGIN }} />
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "flex-end",
-        }}
-      >
-        <Axis
-          direction="vertical"
-          completedIndexes={completedRowIndexes}
-          digitSize={HEADER_DIGIT_SIZE}
-          tileGap={TILE_GAP}
-          allDigits={verticalHeader}
-          tileSize={tileSize}
-        />
-        <View>
+      <View {...panResponder.panHandlers}>
+        <Animated.View
+          style={{
+            flexDirection: "row",
+            alignItems: "flex-end",
+            transform: [
+              {
+                scale: zoomScaleAnimatedValue,
+              },
+              { translateX: panXAnimatedValue },
+              { translateY: panYAnimatedValue },
+            ],
+          }}
+        >
           <Axis
-            direction="horizontal"
-            completedIndexes={completedColumnIndexes}
+            direction="vertical"
+            completedIndexes={completedRowIndexes}
             digitSize={HEADER_DIGIT_SIZE}
             tileGap={TILE_GAP}
-            allDigits={horizontalHeader}
+            allDigits={verticalHeader}
             tileSize={tileSize}
           />
           <View>
-            <View
-              style={{
-                padding: TILE_GAP,
-                backgroundColor: "#f0f0f0",
-                overflow: "hidden",
-              }}
-              {...panResponder.panHandlers}
-            >
-              {horizontalSectionSize > 0 &&
-                new Array(Math.round(tilesInRow / horizontalSectionSize) - 1)
-                  .fill(null)
-                  .map((_, index) => (
-                    <SectionLine
-                      key={`vertical-${index}`}
-                      direction="vertical"
+            <Axis
+              direction="horizontal"
+              completedIndexes={completedColumnIndexes}
+              digitSize={HEADER_DIGIT_SIZE}
+              tileGap={TILE_GAP}
+              allDigits={horizontalHeader}
+              tileSize={tileSize}
+            />
+            <View>
+              <View
+                style={{
+                  padding: TILE_GAP,
+                  backgroundColor: "#f0f0f0",
+                  overflow: "hidden",
+                }}
+              >
+                {horizontalSectionSize > 0 &&
+                  new Array(Math.round(tilesInRow / horizontalSectionSize) - 1)
+                    .fill(null)
+                    .map((_, index) => (
+                      <SectionLine
+                        key={`vertical-${index}`}
+                        direction="vertical"
+                        tileSize={tileSize}
+                        tileGap={TILE_GAP}
+                        index={(index + 1) * horizontalSectionSize}
+                      />
+                    ))}
+                {verticalSectionSize > 0 &&
+                  new Array(
+                    Math.round(tileMap.length / verticalSectionSize) - 1,
+                  )
+                    .fill(null)
+                    .map((_, index) => (
+                      <SectionLine
+                        key={`horizontal-${index}`}
+                        direction="horizontal"
+                        tileSize={tileSize}
+                        tileGap={TILE_GAP}
+                        index={(index + 1) * verticalSectionSize}
+                      />
+                    ))}
+                <View style={{ gap: TILE_GAP }} pointerEvents="none">
+                  {tileMap?.map((row, rowIndex) => (
+                    <View
+                      key={rowIndex}
+                      style={{ flexDirection: "row", gap: TILE_GAP }}
+                    >
+                      {row.map((tileValue, columnIndex) => {
+                        const isRevealed =
+                          revealedTiles[rowIndex]?.[columnIndex] ?? false;
+                        return (
+                          <Tile
+                            getIsPuttingCrosses={getIsPuttingCrosses}
+                            key={columnIndex}
+                            size={tileSize}
+                            tileGap={TILE_GAP}
+                            rowIndex={rowIndex}
+                            columnIndex={columnIndex}
+                            isRowCompleted={rowsCompleted[rowIndex] ?? false}
+                            isColumnCompleted={
+                              columnsCompleted[columnIndex] ?? false
+                            }
+                            state={
+                              isRevealed
+                                ? tileValue
+                                  ? "filled"
+                                  : "crossed"
+                                : "empty"
+                            }
+                          />
+                        );
+                      })}
+                    </View>
+                  ))}
+                </View>
+                {isCompleted && (
+                  <View style={StyleSheet.absoluteFill}>
+                    <ColoredMotive
+                      nonogramKey={srcKey}
                       tileSize={tileSize}
                       tileGap={TILE_GAP}
-                      index={(index + 1) * horizontalSectionSize}
                     />
-                  ))}
-              {verticalSectionSize > 0 &&
-                new Array(Math.round(tileMap.length / verticalSectionSize) - 1)
-                  .fill(null)
-                  .map((_, index) => (
-                    <SectionLine
-                      key={`horizontal-${index}`}
-                      direction="horizontal"
-                      tileSize={tileSize}
-                      tileGap={TILE_GAP}
-                      index={(index + 1) * verticalSectionSize}
-                    />
-                  ))}
-              <View style={{ gap: TILE_GAP }} pointerEvents="none">
-                {tileMap?.map((row, rowIndex) => (
-                  <View
-                    key={rowIndex}
-                    style={{ flexDirection: "row", gap: TILE_GAP }}
-                  >
-                    {row.map((tileValue, columnIndex) => {
-                      const isRevealed =
-                        revealedTiles[rowIndex]?.[columnIndex] ?? false;
-                      return (
-                        <Tile
-                          getIsPuttingCrosses={getIsPuttingCrosses}
-                          key={columnIndex}
-                          size={tileSize}
-                          tileGap={TILE_GAP}
-                          rowIndex={rowIndex}
-                          columnIndex={columnIndex}
-                          isRowCompleted={rowsCompleted[rowIndex] ?? false}
-                          isColumnCompleted={
-                            columnsCompleted[columnIndex] ?? false
-                          }
-                          state={
-                            isRevealed
-                              ? tileValue
-                                ? "filled"
-                                : "crossed"
-                              : "empty"
-                          }
-                        />
-                      );
-                    })}
                   </View>
-                ))}
+                )}
               </View>
               {isCompleted && (
-                <View style={StyleSheet.absoluteFill}>
-                  <ColoredMotive
-                    nonogramKey={srcKey}
-                    tileSize={tileSize}
-                    tileGap={TILE_GAP}
-                  />
+                <View
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    bottom: -32,
+                  }}
+                >
+                  <CompletedName nonogramKey={srcKey} />
                 </View>
               )}
             </View>
-            {isCompleted && (
-              <View
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  bottom: -32,
-                }}
-              >
-                <CompletedName nonogramKey={srcKey} />
-              </View>
-            )}
           </View>
-        </View>
+        </Animated.View>
       </View>
       <View
         style={{
-          marginTop: DEFAULT_NONOGRAM_MARGIN,
-          alignItems: "center",
+          height: DEFAULT_NONOGRAM_MARGIN,
         }}
-      >
-        <PutCrossesToggle
-          value={isPuttingCrosses}
-          onChange={setIsPuttingCrosses}
-        />
-      </View>
+      />
+      <Controls
+        isPuttingCrosses={isPuttingCrosses}
+        onIsPuttingCrossesChange={setIsPuttingCrosses}
+        isZoomed={isZoomed}
+        onIsZoomedChange={setIsZoomed}
+      />
     </View>
   );
 }
