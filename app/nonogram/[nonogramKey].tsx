@@ -1,12 +1,17 @@
-import { BackHandler, ImageBackground, View } from "react-native";
+import {
+  Animated,
+  BackHandler,
+  ImageBackground,
+  useAnimatedValue,
+  View,
+} from "react-native";
 import Nonogram from "@/src/components/nonogram/Nonogram";
 import {
   NonogramKey,
   NonogramSources,
 } from "@/src/constants/nonograms.generated";
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
-import Health from "@/src/components/nonogram/Health";
+import { useEffect, useState, useTransition } from "react";
 import AnimatedLottieView from "lottie-react-native";
 import { windowSize } from "@/src/constants/windowSize";
 import ScrollingBackgroundImage from "@/src/components/ScrollingBackgroundImage";
@@ -30,6 +35,26 @@ export default function NonogramScreen() {
 
   const [isCompleted, setIsCompleted] = useState(false);
   const [health, setHealth] = useState(MAX_HEALTH);
+
+  const [showNonogram, setShowNonogram] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_isPending, startTransition] = useTransition();
+  const nonogramAnimatedValue = useAnimatedValue(showNonogram ? 1 : 0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      startTransition(() => setShowNonogram(true));
+    }, 100);
+  }, []);
+
+  useEffect(() => {
+    Animated.timing(nonogramAnimatedValue, {
+      toValue: showNonogram ? 1 : 0,
+      duration: 1000,
+      delay: 500,
+      useNativeDriver: true,
+    }).start();
+  }, [showNonogram, nonogramAnimatedValue]);
 
   useEffect(() => {
     if (!isValidKey) {
@@ -89,16 +114,35 @@ export default function NonogramScreen() {
         height={windowSize.height}
         speed={0.09}
       />
-      <Health maxHealth={MAX_HEALTH} currentHealth={health} />
-      <View style={{ height: 8 }} />
       <View>
-        <Nonogram
-          key={seed}
-          srcKey={params.nonogramKey as NonogramKey}
-          onGuessWrong={onGuessWrong}
-          onComplete={onComplete}
-          isCompleted={isCompleted}
-        />
+        {showNonogram && (
+          <Animated.View
+            style={{
+              opacity: nonogramAnimatedValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 1],
+              }),
+              transform: [
+                {
+                  translateY: nonogramAnimatedValue.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [80, 0],
+                  }),
+                },
+              ],
+            }}
+          >
+            <Nonogram
+              key={seed}
+              maxHealth={MAX_HEALTH}
+              currentHealth={health}
+              srcKey={params.nonogramKey as NonogramKey}
+              onGuessWrong={onGuessWrong}
+              onComplete={onComplete}
+              isCompleted={isCompleted}
+            />
+          </Animated.View>
+        )}
         {isCompleted && (
           <View
             style={{

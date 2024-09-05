@@ -14,9 +14,10 @@ import ColoredMotive from "./ColoredMotive";
 import CompletedName from "./CompletedName";
 import SectionLine from "./SectionLine";
 import PutCrossesToggle from "./PutCrossesToggle";
+import Health from "./Health";
 
 const MAX_NONOGRAM_SIZE = 700;
-const MIN_MONOGRAM_MARGIN = 16;
+const MIN_MONOGRAM_MARGIN = 32;
 export const DEFAULT_NONOGRAM_MARGIN = Math.max(
   MIN_MONOGRAM_MARGIN,
   (windowSize.width - MAX_NONOGRAM_SIZE) / 2,
@@ -36,6 +37,8 @@ export type NonogramProps = {
   onGuessWrong: () => void;
   onComplete: () => void;
   isCompleted: boolean;
+  maxHealth: number;
+  currentHealth: number;
 };
 
 const getSectionSize = (size: number) => {
@@ -59,6 +62,8 @@ export default function Nonogram({
   onGuessWrong,
   onComplete,
   isCompleted,
+  maxHealth,
+  currentHealth,
 }: NonogramProps) {
   const [isPuttingCrosses, setIsPuttingCrosses] = useState(false);
   const [revealedTiles, setRevealedTiles] = useState<TileMap>([]);
@@ -226,11 +231,11 @@ export default function Nonogram({
   const verticalSectionSize = getSectionSize(tileMap.length);
 
   return (
-    <View
-      style={{
-        margin: DEFAULT_NONOGRAM_MARGIN,
-      }}
-    >
+    <View>
+      <View style={{ alignItems: "center" }}>
+        <Health maxHealth={maxHealth} currentHealth={currentHealth} />
+      </View>
+      <View style={{ height: DEFAULT_NONOGRAM_MARGIN }} />
       <View
         style={{
           flexDirection: "row",
@@ -348,7 +353,7 @@ export default function Nonogram({
       </View>
       <View
         style={{
-          marginTop: 32,
+          marginTop: DEFAULT_NONOGRAM_MARGIN,
           alignItems: "center",
         }}
       >
