@@ -37,6 +37,7 @@ export default function Controls({
         flexDirection: "row",
         gap: 16,
       }}
+      pointerEvents="box-none"
     >
       <PutCrossesToggle
         value={isPuttingCrosses}

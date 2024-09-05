@@ -67,7 +67,8 @@ export default function Nonogram({
   currentHealth,
 }: NonogramProps) {
   const [isPuttingCrosses, setIsPuttingCrosses] = useState(false);
-  const { isZoomed, setIsZoomed, zoomScaleAnimatedValue } = useZoom();
+  const { isZoomed, setIsZoomed, zoomScaleAnimatedValue } =
+    useZoom(isCompleted);
 
   const [revealedTiles, setRevealedTiles] = useState<TileMap>([]);
   const [tileMap, setTileMap] = useState<TileMap>(() =>
@@ -370,6 +371,7 @@ export default function Nonogram({
         style={{
           height: DEFAULT_NONOGRAM_MARGIN,
         }}
+        pointerEvents="none"
       />
       <Controls
         show={!isCompleted}
