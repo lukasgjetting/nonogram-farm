@@ -79,7 +79,9 @@ export default function NonogramScreen() {
     if (health === 0) {
       return;
     } else {
-      setHealth((prev) => prev - 1);
+      setTimeout(() => {
+        setHealth((prev) => prev - 1);
+      }, 500);
     }
   };
 
