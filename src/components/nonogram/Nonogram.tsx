@@ -372,6 +372,7 @@ export default function Nonogram({
         }}
       />
       <Controls
+        show={!isCompleted}
         isPuttingCrosses={isPuttingCrosses}
         onIsPuttingCrossesChange={setIsPuttingCrosses}
         isZoomed={isZoomed}
