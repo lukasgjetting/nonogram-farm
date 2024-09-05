@@ -2,7 +2,7 @@ import {
   getNonogramTileMap,
   NonogramKey,
 } from "@/src/constants/nonograms.generated";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import Tile from "./Tile";
@@ -13,6 +13,7 @@ import Axis from "./Axis";
 import ColoredMotive from "./ColoredMotive";
 import CompletedName from "./CompletedName";
 import SectionLine from "./SectionLine";
+import PutCrossesToggle from "./PutCrossesToggle";
 
 const MAX_NONOGRAM_SIZE = 700;
 const MIN_MONOGRAM_MARGIN = 16;
@@ -59,9 +60,21 @@ export default function Nonogram({
   onComplete,
   isCompleted,
 }: NonogramProps) {
+  const [isPuttingCrosses, setIsPuttingCrosses] = useState(false);
   const [revealedTiles, setRevealedTiles] = useState<TileMap>([]);
   const [tileMap, setTileMap] = useState<TileMap>(() =>
     getNonogramTileMap(srcKey),
+  );
+
+  const isPuttingCrossesRef = useRef(isPuttingCrosses);
+
+  if (isPuttingCrossesRef.current !== isPuttingCrosses) {
+    isPuttingCrossesRef.current = isPuttingCrosses;
+  }
+
+  const getIsPuttingCrosses = useCallback(
+    () => isPuttingCrossesRef.current,
+    [],
   );
 
   const rowsCompleted = tileMap.map((row, rowIndex) =>
@@ -142,7 +155,8 @@ export default function Nonogram({
       return newRevealedTiles;
     });
 
-    const isCorrect = tileMap[rowIndex]?.[columnIndex] ?? false;
+    const shouldBeFilled = tileMap[rowIndex]?.[columnIndex] ?? false;
+    const isCorrect = shouldBeFilled === !isPuttingCrosses;
 
     if (isAlreadyRevealed) {
       return isCorrect;
@@ -284,6 +298,7 @@ export default function Nonogram({
                         revealedTiles[rowIndex]?.[columnIndex] ?? false;
                       return (
                         <Tile
+                          getIsPuttingCrosses={getIsPuttingCrosses}
                           key={columnIndex}
                           size={tileSize}
                           tileGap={TILE_GAP}
@@ -330,6 +345,17 @@ export default function Nonogram({
             )}
           </View>
         </View>
+      </View>
+      <View
+        style={{
+          marginTop: 32,
+          alignItems: "center",
+        }}
+      >
+        <PutCrossesToggle
+          value={isPuttingCrosses}
+          onChange={setIsPuttingCrosses}
+        />
       </View>
     </View>
   );

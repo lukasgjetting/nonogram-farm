@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Animated, Text, useAnimatedValue } from "react-native";
 
-const BACKGROUND_COLOR = "#0ea5e933";
+export const AXIS_LINE_BACKGROUND_COLOR = "#0ea5e933";
 const COMPLETED_BACKGROUND_COLOR = "#cccccc33";
 
 type AxisLineProps = {
@@ -40,7 +40,10 @@ export default function AxisLine({
           justifyContent: "flex-end",
           backgroundColor: completedAnimatedValue.interpolate({
             inputRange: [0, 1],
-            outputRange: [BACKGROUND_COLOR, COMPLETED_BACKGROUND_COLOR],
+            outputRange: [
+              AXIS_LINE_BACKGROUND_COLOR,
+              COMPLETED_BACKGROUND_COLOR,
+            ],
           }),
         },
         direction === "vertical"

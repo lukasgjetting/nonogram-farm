@@ -1,16 +1,21 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
-import { Animated, StyleSheet } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
 
-const FILLED_COLOR = "#082f49";
+export const FILLED_COLOR = "#082f49";
 const FILLED_COLOR_BORDER = "#041b29";
 const EMPTY_COLOR = "white";
 const CROSS_COLOR = "#0f172a";
-const CROSS_BACKGROUND_COLOR = "#ef4444";
+const ERROR_BACKGROUND_COLOR = "#ef4444";
 
 const COMPLETED_ANIMATION_DURATION = 400;
 const COMPLETED_ANIMATION_DELAY = 100;
 
+const FILLED_ANIMATION_DURATION = 250;
+const CROSSED_ANIMATION_DURATION = 250;
+const ERROR_ANIMATION_DURATION = 800;
+
 export type TileProps = {
+  getIsPuttingCrosses: () => boolean;
   size: number;
   tileGap: number;
   state: "empty" | "filled" | "crossed";
@@ -21,6 +26,7 @@ export type TileProps = {
 };
 
 export default memo(function Tile({
+  getIsPuttingCrosses,
   size,
   tileGap,
   state,
@@ -32,7 +38,7 @@ export default memo(function Tile({
   const fillAnimatedValue = useRef(
     new Animated.Value(state === "filled" ? 1 : 0),
   ).current;
-  const crossBackgroundAnimatedValue = useRef(
+  const errorBackgroundAnimatedValue = useRef(
     new Animated.Value(state === "crossed" ? 1 : 0),
   ).current;
   const crossScaleAnimatedValue = useRef(
@@ -43,28 +49,37 @@ export default memo(function Tile({
   const [isAnimatingCompleted, setIsAnimatingCompleted] = useState(false);
 
   useEffect(() => {
+    const isPuttingCrosses = getIsPuttingCrosses();
+    const isFilledError = isPuttingCrosses && state === "filled";
+    const isCrossedError = !isPuttingCrosses && state === "crossed";
+
+    console.log({ isPuttingCrosses, isFilledError, isCrossedError });
+
     Animated.timing(fillAnimatedValue, {
       toValue: state === "filled" ? 1 : 0,
-      duration: 100,
-      useNativeDriver: true,
-    }).start();
-
-    Animated.timing(crossBackgroundAnimatedValue, {
-      toValue: state === "crossed" ? 1 : 0,
-      duration: 750,
+      duration: FILLED_ANIMATION_DURATION,
+      delay: isFilledError ? ERROR_ANIMATION_DURATION : 0,
       useNativeDriver: true,
     }).start();
 
     Animated.timing(crossScaleAnimatedValue, {
       toValue: state === "crossed" ? 1 : 0,
-      duration: 750,
+      duration: CROSSED_ANIMATION_DURATION,
+      delay: isCrossedError ? ERROR_ANIMATION_DURATION : 0,
+      useNativeDriver: true,
+    }).start();
+
+    Animated.timing(errorBackgroundAnimatedValue, {
+      toValue: isCrossedError || isFilledError ? 1 : 0,
+      duration: ERROR_ANIMATION_DURATION,
       useNativeDriver: true,
     }).start();
   }, [
     state,
     fillAnimatedValue,
-    crossBackgroundAnimatedValue,
+    errorBackgroundAnimatedValue,
     crossScaleAnimatedValue,
+    getIsPuttingCrosses,
   ]);
 
   useEffect(() => {
@@ -146,26 +161,32 @@ export default memo(function Tile({
             height: size,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: crossBackgroundAnimatedValue.interpolate({
-              inputRange: [0, 0.3, 0.7, 1],
+            backgroundColor: errorBackgroundAnimatedValue.interpolate({
+              inputRange: [0, 0.4, 0.8, 1],
               outputRange: [
-                `${CROSS_BACKGROUND_COLOR}00`,
-                CROSS_BACKGROUND_COLOR,
-                CROSS_BACKGROUND_COLOR,
-                `${CROSS_BACKGROUND_COLOR}00`,
+                `${ERROR_BACKGROUND_COLOR}00`,
+                ERROR_BACKGROUND_COLOR,
+                ERROR_BACKGROUND_COLOR,
+                `${ERROR_BACKGROUND_COLOR}00`,
               ],
             }),
             transform: isAutoCrossed
               ? []
               : [
                   {
-                    scale: crossScaleAnimatedValue.interpolate({
+                    scale: errorBackgroundAnimatedValue.interpolate({
                       inputRange: [0, 0.3, 1],
                       outputRange: [0, 1, 1],
                     }),
                   },
                 ],
           },
+        ]}
+      />
+      <View
+        style={[
+          StyleSheet.absoluteFill,
+          { justifyContent: "center", alignItems: "center" },
         ]}
       >
         <Animated.Image
@@ -177,14 +198,14 @@ export default memo(function Tile({
             transform: [
               {
                 scale: crossScaleAnimatedValue.interpolate({
-                  inputRange: [0, 0.75, 1],
-                  outputRange: [0, 0, 1],
+                  inputRange: [0, 1],
+                  outputRange: [0, 1],
                 }),
               },
             ],
           }}
         />
-      </Animated.View>
+      </View>
       <Animated.View
         style={[
           StyleSheet.absoluteFill,
