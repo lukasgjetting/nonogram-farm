@@ -29,11 +29,11 @@ export default function BuildingsIntroChapter(
     setSaveData("introNextStep", "plants");
   });
 
-  useNonogramCompletionListener("intro.tree", () => {
+  useNonogramCompletionListener("intro.trees", () => {
     setSaveData("introNextStep", "farm");
   });
 
-  useNonogramCompletionListener("intro.plant", () => {
+  useNonogramCompletionListener("intro.farm", () => {
     setHasFinishedNonograms(true);
   });
 
@@ -116,7 +116,7 @@ export default function BuildingsIntroChapter(
                   ? "available"
                   : "locked"
             }
-            onPress={() => navigateToNonogramScreen("intro.tree")}
+            onPress={() => navigateToNonogramScreen("intro.trees")}
           />
         </Animated.View>
         <Animated.View
@@ -141,7 +141,7 @@ export default function BuildingsIntroChapter(
                   ? "available"
                   : "locked"
             }
-            onPress={() => navigateToNonogramScreen("intro.plant")}
+            onPress={() => navigateToNonogramScreen("intro.farm")}
           />
         </Animated.View>
       </View>

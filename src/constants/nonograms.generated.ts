@@ -59,10 +59,10 @@ export const NonogramSources = {
     "content": "AAAAAAAaaAAA\nAAAAaaaabAAA\nAAAacaabbAAA\nAAAdaaaAAAAA\nAeAAfaaaAAAA\nAghiAaaaaaaA\njgklaafaaaaa\njmkljAfaaaaa\njmmmjAAffaaa\njmmmjAAAaaaa\njmmjAAAAaaaA\nAjjjAAAaaaAA",
     "colors": {"A":"#C7FFBE","a":"#FFFFFF","b":"#FFE9F9","c":"#000000","d":"#FFD1F2","e":"#85C959","f":"#F2ECEC","g":"#FFAE36","h":"#4B8C1D","i":"#376816","j":"#7F5D3D","k":"#FB9600","l":"#C17400","m":"#9F7E60"}
   },
-  "intro.tree": {
-    "name": "Tree",
-    "content": "ZZZZaaZZZZ\nZZZaaaaZZZ\nZZYaaaaaZZ\nZZababaaZZ\nZZZabaaZZZ\nZZZZbbZZZZ\nZaaZbbbaZZ\nZZabbbbZZZ\nZZZZXbZZbb\nWWWbbbbWWW",
-    "colors": {"a":"#65a30d","b":"#854d0e","X":"#d97706","Y":"#365314","Z":"#7dd3fc","W":"#86efac"}
+  "intro.trees": {
+    "name": "Trees",
+    "content": "AAAababbcc\nAAababbbbc\nAAabbabdbc\nAAAaaeadce\nAffaaeadae\nfghiaeadae\nBBBBBBBkkk\nBBBBBkkkkl\nBBkkkkllll",
+    "colors": {"a":"#AED293","b":"#8AAC71","c":"#6C9351","d":"#7F5D3D","e":"#62462C","f":"#395637","g":"#2C432A","h":"#DAC3FF","i":"#588054","j":"#4A6C47","k":"#BDF3A3","l":"#AADB93","A":"#BCEBFF","B":"#DFFFD0"}
   },
   "intro.sun": {
     "name": "Sun",
@@ -74,15 +74,15 @@ export const NonogramSources = {
     "content": "xxx",
     "colors": {"x":"#000"}
   },
-  "intro.plant": {
-    "name": "Plant",
-    "content": "ZZZaZaaaaaaaZZZ\neeeeZZaaaaaZZee\neeeeeeZaaaeeeee\neebbbeZZZZeeeee\nZeebbbZaZZbbeeZ\nZZZZbbZZbbZZZZZ\nZbbbZbYbYbZZZZZ\nZZZZZZbbbZZZZZZ\nZbbZZZbbZZZZZZZ\nZZbbbZbbZZZZZZZ\nZZZZcbbbccZZZZZ\nZZZZccccccddZZZ\ndddcddccdccdddd\nddddXddXdddddXX",
-    "colors": {"a":"#f3e100","b":"#053408","c":"#693c0d","d":"#23a518","e":"#ffffff","Z":"#4ce6ff","Y":"#19c04b","X":"#0d6527"}
-  },
   "intro.house": {
     "name": "House",
-    "content": "ZZZaZZZ\nZZaaaZZ\nZaaaaaZ\naaaaaaa\nZcYcXcZ\nZcYcccZ\nbbbbbbb",
-    "colors": {"a":"#422006","b":"#052e16","c":"#713f12","X":"#ccfbf1","Y":"#450a0a","Z":"#7dd3fc"}
+    "content": "ZZZbcZZZ\nZZabcdZZ\nZaabcddZ\naabbccdd\nZeefghiZ\nZeafghiZ\nZebffiiZ\njjkkklll",
+    "colors": {"a":"#DF4848","b":"#C73A3A","c":"#A63636","d":"#7B2828","e":"#E4C8A7","f":"#CAAE8E","g":"#E7FFFE","h":"#D6F4F3","i":"#AB9070","j":"#DFFFD0","k":"#BDF3A3","l":"#AADB93","Z":"#BCEBFF"}
+  },
+  "intro.farm": {
+    "name": "Farm",
+    "content": "aaaaaaaaaaaa\naaaaaaaaaaaa\nABBABBABBABB\nAaaAaaAaaAaa\nCCDCCDCCDCCD\nbccbccbccbcc\nEdFEdFEFdEFd\nEddEddEddEdd\nbccbccbccbcc\nEFdEFdEdFEdF\nEddEddEddEdd\nbccbccbccbcc",
+    "colors": {"a":"#BCEBFF","b":"#BF956E","c":"#62462C","d":"#9F7E60","A":"#5F4025","B":"#3C2817","C":"#AED293","D":"#8AAC71","E":"#7F5D3D","F":"#5E8C3E"}
   }
 } as const;
 
