@@ -106,12 +106,16 @@ const useNonogramPanResponder = (opts: {
         return true;
       },
       onMoveShouldSetPanResponder: (e, gestureState) => {
-        isPanningZoomRef.current = true;
         return true;
       },
       onMoveShouldSetPanResponderCapture: (e, gestureState) => true,
       onPanResponderMove: (e, gestureState) => {
-        isPanningZoomRef.current = true;
+        if (
+          isZoomedRef.current &&
+          (Math.abs(gestureState.dx) >= 5 || Math.abs(gestureState.dy) >= 5)
+        ) {
+          isPanningZoomRef.current = true;
+        }
 
         if (isZoomedRef.current && isPanningZoomRef.current) {
           panXAnimatedValue.setValue(
@@ -120,7 +124,7 @@ const useNonogramPanResponder = (opts: {
           panYAnimatedValue.setValue(
             getPanValue(panYRef.current + gestureState.dy) * PAN_SCALE,
           );
-        } else {
+        } else if (!isZoomedRef.current) {
           handleTouch(e.nativeEvent.locationX, e.nativeEvent.locationY);
         }
       },
