@@ -106,24 +106,17 @@ export default function NonogramIcon({
           height: SIZE,
           justifyContent: "center",
           alignItems: "center",
-          transform: [
-            {
-              scale: pressedScale,
-            },
-          ],
+          transform: [{ scale: pressedScale }],
         }}
       >
         <Animated.Image
           source={ICON_MAP[type]}
           style={{
+            opacity: 1,
             width: SIZE,
             height: SIZE,
             resizeMode: "contain",
-            transform: [
-              {
-                scale: iconScale,
-              },
-            ],
+            transform: [{ scale: iconScale }],
           }}
         />
         <Animated.View
