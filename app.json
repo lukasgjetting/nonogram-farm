@@ -22,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#c1f09d"
-      }
+      },
+      "package": "com.lukasgjetting.nonogramfarm"
     },
     "web": {
       "bundler": "metro",
