@@ -98,7 +98,7 @@ export default function HomeScreen() {
           isVisible={!!saveData.buildings["art-gallery"]}
           x={dx(88)}
           y={dy(64)}
-          dropDelay={1000}
+          dropDelay={250}
         />
         {introChapter ?? <BottomMenu />}
       </View>

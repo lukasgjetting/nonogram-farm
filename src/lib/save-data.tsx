@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PlantedSeed, SeedType } from "../constants/seeds";
 const SAVE_DATA_ASYNC_STORAGE_KEY = "nonogramFarm:saveData";
@@ -42,15 +42,17 @@ const initialData: SaveData = {
 type SaveDataContextValue = {
   saveData: SaveData | null;
   updateSaveData: UpdateSaveData;
+  replaceSaveData: (saveData: SaveData) => void;
 };
 
 const SaveDataContext = createContext<SaveDataContextValue>({
   saveData: null,
   updateSaveData: () => {},
+  replaceSaveData: () => {},
 });
 
 export function useSaveData() {
-  const { saveData, updateSaveData } = useContext(SaveDataContext);
+  const { saveData, updateSaveData, replaceSaveData } = useContext(SaveDataContext);
 
   if (saveData == null) {
     throw new Error(
@@ -58,7 +60,7 @@ export function useSaveData() {
     );
   }
 
-  return [saveData, updateSaveData] as const;
+  return [saveData, updateSaveData, { replaceSaveData }] as const;
 }
 
 type SaveDataProviderProps = {
@@ -72,7 +74,22 @@ export function SaveDataProvider({
 }: SaveDataProviderProps) {
   const [saveData, setSaveData] = useState<SaveData | null>(null);
 
-  const updateSaveData: SaveDataContextValue["updateSaveData"] = (
+  const replaceSaveData: SaveDataContextValue["replaceSaveData"] = useCallback((newData) => {
+    setSaveData((prev) => {
+      if (prev == null) {
+        return null;
+      }
+
+      AsyncStorage.setItem(
+        SAVE_DATA_ASYNC_STORAGE_KEY,
+        JSON.stringify(newData),
+      );
+
+      return newData;
+    });
+  }, []);
+
+  const updateSaveData: SaveDataContextValue["updateSaveData"] = useCallback((
     key,
     value,
   ) => {
@@ -93,7 +110,7 @@ export function SaveDataProvider({
 
       return newData;
     });
-  };
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -118,8 +135,10 @@ export function SaveDataProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const contextValue = useMemo(() => ({ saveData, updateSaveData, replaceSaveData: setSaveData }), [saveData, updateSaveData, replaceSaveData]);
+
   return (
-    <SaveDataContext.Provider value={{ saveData, updateSaveData }}>
+    <SaveDataContext.Provider value={contextValue}>
       {children}
     </SaveDataContext.Provider>
   );

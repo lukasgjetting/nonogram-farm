@@ -41,6 +41,7 @@ export default function RootLayout() {
               />
               <Stack.Screen name="shop" options={{ headerShown: false }} />
               <Stack.Screen name="inventory" options={{ headerShown: false }} />
+              <Stack.Screen name="dev-tools" options={{ title: 'Dev Tools' }} />
             </Stack>
           ) : null}
         </SaveDataProvider>
