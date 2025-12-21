@@ -34,6 +34,7 @@ export default function Building({
   children,
 }: Props) {
   const animatedValue = useAnimatedValue(isVisible ? 1 : 0);
+  const height = width / aspectRatio;
 
   useEffect(() => {
     Animated.timing(animatedValue, {
@@ -48,8 +49,8 @@ export default function Building({
     <Animated.View
       style={{
         position,
-        left: x,
-        top: y,
+        left: x - width / 2,
+        top: y - height / 2,
         opacity: animatedValue.interpolate({
           inputRange: [0, 0.4, 1],
           outputRange: [0, 1, 1],
@@ -76,11 +77,7 @@ export default function Building({
         ],
       }}
     >
-      <Image
-        source={source}
-        style={{ width, height: width / aspectRatio }}
-        resizeMode="contain"
-      />
+      <Image source={source} style={{ width, height }} resizeMode="contain" />
       <View style={StyleSheet.absoluteFill}>{children}</View>
     </Animated.View>
   );

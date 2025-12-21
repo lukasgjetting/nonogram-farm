@@ -4,7 +4,14 @@ import ItemSlots, { ITEM_SIZE } from "@/src/components/store/ItemSlots";
 import Text from "@/src/components/Text";
 import ValueChangeIndicator from "@/src/components/ValueChangeIndicator";
 import { windowSize } from "@/src/constants/windowSize";
-import { useSaveData } from "@/src/lib/save-data";
+import {
+  BuildingType,
+  SaveData,
+  UpdateSaveData,
+  useSaveData,
+} from "@/src/lib/save-data";
+import { NavigationProp } from "@react-navigation/native";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   Alert,
@@ -19,21 +26,38 @@ const HEADER_WIDTH = windowSize.width * 1.2;
 const HEADER_HEIGHT = HEADER_WIDTH / 2;
 
 type ShopItem =
-  | {
-      id: "nonogram";
-    }
-  | {
-      id: "extra-health";
-    };
+  | { id: "nonogram" }
+  | { id: "extra-health" }
+  | { id: "building"; type: BuildingType };
 
 const SHOP_ITEMS: ({
   price: number;
   image: ImageSourcePropType;
+  isAvailable: (saveData: SaveData) => boolean;
+  onBuy: (opts: { saveData: SaveData; updateSaveData: UpdateSaveData }) => void;
 } & ShopItem)[] = [
   {
     id: "nonogram",
     price: 100,
     image: require("@assets/images/nonogram-icons/seed.png"),
+    isAvailable: () => true,
+    onBuy: ({ saveData, updateSaveData }) => {
+      updateSaveData("nonograms", (saveData.nonograms ?? 0) + 1);
+    },
+  },
+  {
+    id: "building",
+    type: "art-gallery",
+    price: 500,
+    image: require("@assets/images/buildings/art-gallery.png"),
+    isAvailable: (saveData) => !saveData.buildings["art-gallery"],
+    onBuy: ({ saveData, updateSaveData }) => {
+      updateSaveData("buildings", {
+        ...saveData.buildings,
+        "art-gallery": true,
+      });
+      router.back();
+    },
   },
 ];
 
@@ -45,11 +69,7 @@ export default function ShopScreen() {
     <View style={{ flex: 1 }}>
       <StatusBar barStyle={"dark-content"} />
       <ImageBackground
-        style={{
-          flex: 1,
-          alignItems: "center",
-          overflow: "hidden",
-        }}
+        style={{ flex: 1, alignItems: "center", overflow: "hidden" }}
         imageStyle={{ resizeMode: "cover" }}
         source={require("@assets/images/shop-background.png")}
       >
@@ -70,15 +90,19 @@ export default function ShopScreen() {
         </View>
         <View style={{ flex: 1, alignSelf: "stretch" }}>
           <ItemSlots
-            items={SHOP_ITEMS.map((i) => ({
-              image: i.image,
-              id: i.id,
-              extra: i.price,
-            }))}
+            items={SHOP_ITEMS.filter((i) => i.isAvailable(saveData)).map(
+              (i) => ({
+                image: i.image,
+                id: i.id,
+                extra: { price: i.price, onBuy: i.onBuy },
+              }),
+            )}
             onPress={(item) => {
-              if (saveData.coins >= item.extra) {
-                updateSaveData("coins", saveData.coins - item.extra);
-                updateSaveData("nonograms", (saveData.nonograms ?? 0) + 1);
+              const { price, onBuy } = item.extra;
+
+              if (saveData.coins >= price) {
+                updateSaveData("coins", saveData.coins - price);
+                onBuy({ saveData, updateSaveData });
                 setBoughtId(item.id);
               } else {
                 Alert.alert(
@@ -117,7 +141,7 @@ export default function ShopScreen() {
                       color: "#E4C8A7",
                     }}
                   >
-                    {item.extra}
+                    {item.extra.price}
                   </Text>
                   <Image
                     source={require("@assets/images/icons/coins.png")}

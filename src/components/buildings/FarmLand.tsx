@@ -31,9 +31,9 @@ const FARM_LANDS_HORIZONTAL = 3;
 const FARM_LANDS_VERTICAL = 2;
 
 const getHorizontalOffset = (pos: { x: number; y: number }) =>
-  pos.x * 0.62 * WIDTH + pos.y * 0.38 * WIDTH;
+  pos.x * 0.56 * WIDTH + pos.y * 0.42 * WIDTH;
 const getVerticalOffset = (pos: { x: number; y: number }) =>
-  pos.x * -0.204 * HEIGHT + pos.y * 0.275 * HEIGHT;
+  pos.x * -0.224 * HEIGHT + pos.y * 0.215 * HEIGHT;
 
 const getSeedImage = (seed: PlantedSeed | null) => {
   if (seed == null) {
@@ -63,8 +63,8 @@ const renderAllFarmLands = (props: BuildingProps, seed: PlantedSeed | null) => {
         source={require("@assets/images/buildings/farm-land.png")}
         width={WIDTH}
         aspectRatio={ASPECT_RATIO}
-        x={getHorizontalOffset(pos)}
-        y={getVerticalOffset(pos)}
+        x={getHorizontalOffset(pos) + WIDTH / 2}
+        y={getVerticalOffset(pos) + HEIGHT / 2}
       >
         {seedImage != null && (
           <View
@@ -97,7 +97,9 @@ const renderAllFarmLands = (props: BuildingProps, seed: PlantedSeed | null) => {
         .map((_, y) =>
           new Array(FARM_LANDS_HORIZONTAL)
             .fill(null)
-            .map((_, x) => renderSingleFarmLand({ x, y })),
+            .map((_, x) =>
+              renderSingleFarmLand({ x: FARM_LANDS_HORIZONTAL - 1 - x, y }),
+            ),
         )}
     </>
   );
@@ -122,12 +124,20 @@ export default function FarmLand(props: BuildingProps) {
     }
 
     Animated.loop(
-      Animated.timing(pulseAnimatedValue, {
-        toValue: 1,
-        duration: 1500,
-        useNativeDriver: true,
-        easing: Easing.linear,
-      }),
+      Animated.sequence([
+        Animated.timing(pulseAnimatedValue, {
+          toValue: 1,
+          duration: 1500,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+        Animated.timing(pulseAnimatedValue, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+      ]),
     ).start();
   }, [plantedSeed, pulseAnimatedValue]);
 
@@ -164,15 +174,18 @@ export default function FarmLand(props: BuildingProps) {
     }
   };
 
+  const width = maxXOffset + WIDTH;
+  const height = maxYOffset + HEIGHT;
+
   return (
     <>
       <Animated.View
         style={{
           position: "absolute",
-          left: props.x,
-          top: props.y,
-          width: maxXOffset + WIDTH,
-          height: maxYOffset + HEIGHT,
+          left: props.x - width / 2,
+          top: props.y - height / 2,
+          width,
+          height,
           transform: [
             {
               scale: pulseAnimatedValue.interpolate({
@@ -184,17 +197,17 @@ export default function FarmLand(props: BuildingProps) {
         }}
       >
         {renderAllFarmLands({ ...props, x: 0, y: 0 }, plantedSeed)}
-        <Pressable style={StyleSheet.absoluteFillObject} onPress={onPress} />
+        <Pressable
+          style={[StyleSheet.absoluteFillObject, { top: -HEIGHT / 2 }]}
+          onPress={onPress}
+        />
       </Animated.View>
       <SeedOptionsModal
         visible={isSeedMenuOpen}
         onClose={() => setIsSeedMenuOpen(false)}
         onSelect={(seed) => {
           updateSaveData("plantedSeed", { type: seed, plantedAt: Date.now() });
-          updateSaveData("seeds", {
-            ...seeds,
-            [seed]: (seeds[seed] ?? 0) - 1,
-          });
+          updateSaveData("seeds", { ...seeds, [seed]: (seeds[seed] ?? 0) - 1 });
         }}
       />
     </>

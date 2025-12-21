@@ -6,6 +6,8 @@ const SAVE_DATA_ASYNC_STORAGE_KEY = "nonogramFarm:saveData";
 export const INTRO_STEPS = ["sun", "house", "plants", "farm"] as const;
 export type IntroStep = (typeof INTRO_STEPS)[number];
 
+export type BuildingType = "art-gallery";
+
 export type SaveData = {
   hasCompletedNonogramTutorial: boolean;
   hasCompletedInventoryTutorial: boolean;
@@ -16,7 +18,13 @@ export type SaveData = {
   coins: number;
   plantedSeed: PlantedSeed | null;
   nonograms: number;
+  buildings: Partial<Record<BuildingType, boolean>>;
 };
+
+export type UpdateSaveData = <TKey extends keyof SaveData>(
+  key: TKey,
+  value: SaveData[TKey],
+) => void;
 
 const initialData: SaveData = {
   introNextStep: "sun",
@@ -28,14 +36,12 @@ const initialData: SaveData = {
   coins: 0,
   plantedSeed: null,
   nonograms: 0,
+  buildings: {},
 };
 
 type SaveDataContextValue = {
   saveData: SaveData | null;
-  updateSaveData: <TKey extends keyof SaveData>(
-    key: TKey,
-    value: SaveData[TKey],
-  ) => void;
+  updateSaveData: UpdateSaveData;
 };
 
 const SaveDataContext = createContext<SaveDataContextValue>({
@@ -97,7 +103,8 @@ export function SaveDataProvider({
         );
 
         if (existingSave) {
-          setSaveData(JSON.parse(existingSave));
+          console.log("existingSave", existingSave,  {...initialData, ...JSON.parse(existingSave) });
+          setSaveData({ ...initialData, ...JSON.parse(existingSave) });
         } else {
           setSaveData(initialData);
         }
